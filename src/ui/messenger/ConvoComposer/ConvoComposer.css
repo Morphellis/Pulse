@@ -1,0 +1,174 @@
+.ConvoComposer {
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--convoHistoryIndent) var(--convoHistoryIndent) var(--convoHistoryIndent);
+}
+
+.ConvoComposer__inner {
+  background: var(--vkd--color_background_composer);
+  width: 100%;
+  max-width: calc(var(--convoHistoryMaxWidth) - 2 * var(--convoHistoryIndent));
+  border-radius: var(--vkd--radius_lg);
+  box-shadow: var(--vkd--shadow_md), inset 0 0 0 1px var(--vkui--color_separator_primary);
+  transition: box-shadow var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.ConvoComposer__inner:focus-within {
+  box-shadow: var(--vkd--shadow_md), inset 0 0 0 1px var(--vkui--color_stroke_accent);
+}
+
+/* Файл тащат в окно: подсвечиваем поле ввода как область приёма */
+.ConvoComposer--dragover .ConvoComposer__inner {
+  box-shadow: var(--vkd--shadow_md), inset 0 0 0 2px var(--vkui--color_stroke_accent);
+}
+
+/* Панель ответа над полем ввода */
+.ConvoComposer__reply {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_8);
+  padding: var(--vkd--space_8) var(--vkd--space_8) var(--vkd--space_8) var(--vkd--space_12);
+  border-bottom: 1px solid var(--vkui--color_separator_primary);
+}
+
+/* Панель правки: занимает то же место, что и панель ответа */
+.ConvoComposer__editing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_2);
+  flex: 1;
+  min-width: 0;
+  padding-left: var(--vkd--space_10);
+  border-left: 2px solid var(--vkui--color_background_accent_themed);
+}
+
+.ConvoComposer__editingTitle {
+  font: var(--vkd--font_caption);
+  color: var(--vkui--color_text_accent_themed);
+}
+
+.ConvoComposer__editingText {
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ConvoComposer__editingError {
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_negative);
+}
+
+.ConvoComposer__replyPreview {
+  min-width: 0;
+  flex: 1;
+}
+
+.ConvoComposer__replyCancel {
+  width: 32px;
+  height: 32px;
+  flex: none;
+}
+
+.ConvoComposer__attaches {
+  display: flex;
+  gap: var(--vkd--space_12);
+  padding: var(--vkd--space_12);
+  overflow: overlay;
+  border-bottom: 1px solid var(--vkui--color_separator_primary);
+}
+
+.ConvoComposer__panel {
+  display: flex;
+  align-items: center;
+  padding: var(--vkd--space_4) var(--vkd--space_8);
+  min-height: 48px;
+}
+
+.ConvoComposer__input {
+  width: 100%;
+  margin: var(--vkd--space_10) var(--vkd--space_6);
+  font: var(--vkd--font_body);
+  max-height: 200px;
+  overflow: overlay;
+}
+
+.ConvoComposer__input:empty::before {
+  content: attr(placeholder);
+  pointer-events: none;
+  color: var(--vkui--color_text_secondary);
+}
+
+.ConvoComposer__addAttaches,
+.ConvoComposer__send {
+  width: 36px;
+  height: 36px;
+  align-self: flex-end;
+  margin-bottom: var(--vkd--space_4);
+}
+
+.ConvoComposer__addAttaches {
+  color: var(--vkui--color_icon_medium);
+}
+
+.ConvoComposer__send {
+  color: var(--vkui--color_icon_accent);
+}
+
+.ConvoComposer__restriction {
+  display: flex;
+  align-items: center;
+  margin: 0 4px;
+  gap: 8px;
+  color: var(--vkui--color_text_subhead);
+}
+
+.ConvoComposer__recordingCancel {
+  width: 36px;
+  height: 36px;
+  align-self: flex-end;
+  margin-bottom: var(--vkd--space_4);
+  color: var(--vkui--color_icon_medium);
+}
+
+.ConvoComposer__recordingDot {
+  width: 10px;
+  height: 10px;
+  margin: 0 var(--vkd--space_8) 0 var(--vkd--space_12);
+  flex: none;
+  border-radius: 50%;
+  background: var(--vkui--color_icon_negative);
+  animation: convo-composer-recording-pulse 1.2s ease-in-out infinite;
+}
+
+.ConvoComposer__recordingDot--paused {
+  animation: none;
+  opacity: 0.35;
+}
+
+.ConvoComposer__recordingPause {
+  width: 36px;
+  height: 36px;
+  align-self: flex-end;
+  margin-bottom: var(--vkd--space_4);
+  color: var(--vkui--color_icon_medium);
+}
+
+.ConvoComposer__recordingTime {
+  flex: 1;
+  font: var(--vkd--font_body);
+  font-variant-numeric: tabular-nums;
+  color: var(--vkui--color_text_secondary);
+}
+
+@keyframes convo-composer-recording-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ConvoComposer__recordingDot {
+    animation: none;
+  }
+}

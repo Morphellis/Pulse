@@ -1,0 +1,110 @@
+.CommentsModal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_16);
+  width: 540px;
+  max-width: 100%;
+  max-height: 60vh;
+  padding-top: var(--vkd--space_4);
+  overflow: hidden overlay;
+}
+
+.CommentsModal__placeholder {
+  padding: var(--vkd--space_24) 0;
+  text-align: center;
+  font: var(--vkd--font_body);
+  color: var(--vkui--color_text_secondary);
+}
+
+.CommentsModal__loadMore {
+  align-self: flex-start;
+  font: var(--vkd--font_body_strong);
+  color: var(--vkui--color_text_link);
+}
+
+.CommentsModal__spinner {
+  align-self: center;
+}
+
+.CommentsModal__sendError {
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_negative);
+}
+
+.CommentsModal__input {
+  width: 100%;
+}
+
+.Comment {
+  display: flex;
+  gap: var(--vkd--space_10);
+}
+
+.Comment--reply {
+  margin-top: var(--vkd--space_12);
+  margin-left: var(--vkd--space_8);
+}
+
+.Comment__avatar {
+  flex: none;
+  line-height: 0;
+  cursor: pointer;
+}
+
+/*
+  Текст комментария лежит в подложке-«пузыре»: так ветка читается как разговор
+  и визуально отделяется от служебной строки с датой
+*/
+.Comment__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.Comment__bubble {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_2);
+  max-width: 100%;
+  padding: var(--vkd--space_8) var(--vkd--space_12);
+  background: var(--vkui--color_background_secondary);
+  border-radius: var(--vkd--radius_md);
+}
+
+.Comment__author {
+  align-self: flex-start;
+  font: var(--vkd--font_body_strong);
+  color: var(--vkui--color_text_link);
+  cursor: pointer;
+}
+
+.Comment__author:hover {
+  text-decoration: underline;
+}
+
+.Comment__text {
+  font: var(--vkd--font_body);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.Comment__attaches {
+  margin-top: var(--vkd--space_6);
+}
+
+.Comment__meta {
+  display: flex;
+  gap: var(--vkd--space_12);
+  margin-top: var(--vkd--space_4);
+  padding-left: var(--vkd--space_4);
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+.Comment__hiddenReplies {
+  margin-top: var(--vkd--space_8);
+  padding-left: var(--vkd--space_4);
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_tertiary);
+}

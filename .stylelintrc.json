@@ -1,0 +1,46 @@
+{
+  "plugins": ["@stylistic/stylelint-plugin"],
+  "extends": ["stylelint-config-standard", "@stylistic/stylelint-config"],
+
+  "rules": {
+    "font-family-no-missing-generic-family-keyword": null,
+    "custom-property-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "no-descending-specificity": null,
+    "comment-empty-line-before": null,
+    "selector-class-pattern": null,
+    "length-zero-no-unit": null,
+    "shorthand-property-no-redundant-values": [true, {
+      "ignore": "four-into-three-edge-values"
+    }],
+    "custom-property-pattern": "[a-z][a-zA-Z0-9_-]?",
+    "font-family-name-quotes": "always-where-required",
+    "alpha-value-notation": "number",
+    "media-feature-name-value-no-unknown": true,
+    "selector-no-invalid": true,
+    "selector-no-deprecated": true,
+    "value-keyword-case": ["lower", {
+      "ignoreKeywords": ["optimizeSpeed"]
+    }],
+    "declaration-property-value-no-unknown": [true, {
+      "ignoreProperties": {
+        "overflow": ["overlay", "overlay hidden", "hidden overlay"]
+      }
+    }],
+    "declaration-property-value-keyword-no-deprecated": [true, {
+      "ignoreKeywords": ["overlay", "overlay hidden", "hidden overlay"]
+    }],
+    "declaration-block-no-redundant-longhand-properties": [true, {
+      "ignoreShorthands": ["inset", "grid-template", "flex-flow"]
+    }],
+    "declaration-property-value-disallowed-list": {
+      "// overflow note": "Используем только overlay, чтобы на винде и линуксе были скроллбары как на макоси",
+      "overflow": ["visible", "auto", "hidden auto", "auto hidden"],
+      "overflow-x": ["visible", "auto"],
+      "overflow-y": ["visible", "auto"]
+    },
+
+    "@stylistic/string-quotes": "single",
+    "@stylistic/selector-list-comma-newline-after": null
+  }
+}

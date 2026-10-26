@@ -1,0 +1,43 @@
+/*
+  Окно уведомлений прозрачное, поэтому фон и растяжку на всю высоту из .root снимаем:
+  видимыми должны остаться только сами карточки
+*/
+.NotificationsRoot {
+  height: auto;
+  background: transparent;
+}
+
+.NotificationsStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_8);
+  /* Тень карточек не должна обрезаться краем окна */
+  padding: var(--vkd--space_8);
+}
+
+.toast-enter-active {
+  transition:
+    opacity var(--vkd--duration_slow) var(--vkd--ease_out),
+    transform var(--vkd--duration_slow) var(--vkd--ease_out);
+}
+
+.toast-leave-active {
+  transition:
+    opacity var(--vkd--duration_fast) var(--vkd--ease),
+    transform var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+/* Появление снизу вверх: движение по горизонтали обрезалось бы краем окна */
+.toast-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.toast-leave-to {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+.toast-move {
+  transition: transform var(--vkd--duration_medium) var(--vkd--ease);
+}

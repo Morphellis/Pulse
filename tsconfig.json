@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    // Указывает на формат транспиляции импортов
+    "module": "preserve",
+    // Указывает, какие фичи будут отражены в типах
+    "target": "es2023",
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "types": ["vite/client", "user-agent-data-types", "@types/wicg-file-system-access"],
+
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "sourceMap": true,
+    // Чтобы projectService: true работал и не ругался что он не видит .js файлы
+    "allowJs": true,
+    "noEmit": true,
+    "paths": {
+      "main-process/*": ["./main-process/*"],
+      "actions": ["./src/actions"],
+      "actions/*": ["./src/actions/*"],
+      "assets/*": ["./src/assets/*"],
+      "assets/icons/*": ["./none"],
+      "converters/*": ["./src/converters/*"],
+      "services": ["./src/services"],
+      "services/*": ["./src/services/*"],
+      "hooks": ["./src/hooks"],
+      "lang/*": ["./src/lang/*"],
+      "misc/*": ["./src/misc/*"],
+      "model/*": ["./src/model/*"],
+      "store/*": ["./src/store/*"],
+      "ui/*": ["./src/ui/*"],
+      "ui/modals/parts/*": ["./none"]
+    }
+  },
+
+  "include": [
+    "src/**/*",
+    "main-process/**/*",
+    "scripts/*",
+    "server/*",
+    "build/*",
+    "eslint.config.mjs",
+    "eslint.config.full.mjs",
+    "vite.config.mts"
+  ],
+  "exclude": ["node_modules"]
+}

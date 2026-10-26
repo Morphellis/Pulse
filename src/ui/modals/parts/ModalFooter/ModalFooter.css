@@ -1,0 +1,12 @@
+.ModalFooter {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_12);
+  padding: var(--vkd--space_12) var(--vkd--space_20) var(--vkd--space_20);
+}
+
+.ModalFooter__buttons {
+  display: flex;
+  margin-left: auto;
+  gap: var(--vkd--space_8);
+}

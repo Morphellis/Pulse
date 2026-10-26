@@ -1,0 +1,45 @@
+.PostSkeletonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_12);
+  width: 100%;
+}
+
+.PostSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_12);
+  padding: var(--vkd--space_16);
+  background: var(--vkui--color_background_content);
+  border-radius: var(--vkd--radius_lg);
+  box-shadow: inset 0 0 0 1px var(--vkui--color_separator_primary);
+}
+
+.PostSkeleton__header {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_12);
+}
+
+.PostSkeleton__headerText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_6);
+}
+
+.PostSkeleton__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_8);
+}
+
+.PostSkeleton__attach {
+  border-radius: var(--vkd--radius_md);
+}
+
+.PostSkeleton__footer {
+  display: flex;
+  gap: var(--vkd--space_16);
+  padding-top: var(--vkd--space_12);
+  border-top: 1px solid var(--vkui--color_separator_primary);
+}

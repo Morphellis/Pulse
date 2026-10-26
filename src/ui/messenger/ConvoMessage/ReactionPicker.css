@@ -1,0 +1,67 @@
+/* Панель живёт только в меню сообщения, поэтому повторяет ширину списка действий */
+.ReactionPicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--vkd--space_2);
+  padding: var(--vkd--space_4);
+  border-radius: var(--vkd--radius_pill);
+  background: var(--vkui--color_background_modal);
+  box-shadow: var(--vkd--shadow_card);
+}
+
+.ReactionPicker__reaction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: transform var(--vkd--duration_fast) var(--vkd--ease_out);
+}
+
+/* Реакция подрастает под курсором: так видно, во что целишься */
+.ReactionPicker__reaction:hover {
+  transform: scale(1.25);
+}
+
+.ReactionPicker__reaction:active {
+  transform: scale(1.05);
+}
+
+.ReactionPicker__reaction--mine {
+  background: var(--vkui--color_background_accent);
+}
+
+.ReactionPicker__image {
+  width: 22px;
+  height: 22px;
+}
+
+.ReactionPicker__more {
+  color: var(--vkui--color_icon_secondary);
+}
+
+/* Полный список: восемь в ряд, дальше прокрутка */
+.ReactionPicker__grid {
+  display: grid;
+  grid-template-columns: repeat(8, 32px);
+  gap: var(--vkd--space_2);
+  max-height: 240px;
+  overflow-y: overlay;
+  padding: var(--vkd--space_8);
+}
+
+.ReactionPicker__reaction--inGrid {
+  width: 32px;
+  height: 32px;
+}
+
+.ReactionPicker__reaction--inGrid .ReactionPicker__image {
+  width: 26px;
+  height: 26px;
+}

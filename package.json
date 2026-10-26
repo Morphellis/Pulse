@@ -1,0 +1,74 @@
+{
+  "name": "vk-desktop-dev",
+  "version": "1.0.0-alpha.2",
+  "description": "Мессенджер ВКонтакте",
+  "main": "app/index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "yarn run dist && yarn run pack",
+    "test": "vitest run",
+    "test-watch": "vitest watch",
+    "lint:eslint": "eslint -c eslint.config.full.mjs src main-process scripts *.{mjs,mts}",
+    "lint:stylelint": "stylelint src/**/*.css",
+    "lint": "yarn lint:eslint && yarn lint:stylelint",
+    "dist": "tsc && vite build",
+    "pack": "electron-builder --config build/config.json",
+    "win-setup": "yarn win-setup64",
+    "win-setup64": "innosetup-compiler build/config-x64.iss --verbose",
+    "win-setup32": "innosetup-compiler build/config-ia32.iss --verbose",
+    "postinstall": "husky && node ./scripts/moveVkuiTokens.mjs"
+  },
+  "repository": "https://github.com/Morphellis/vk_desktop",
+  "author": "danyadev <danyadev@mail.ru>",
+  "contributors": [
+    "Morphellis"
+  ],
+  "license": "Apache-2.0",
+  "engines": {
+    "node": "^22.22.1 || >=24",
+    "yarn": "^1.22.22"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,mjs,mts}": [
+      "eslint -c eslint.config.full.mjs",
+      "vitest related --run"
+    ],
+    "*.css": "stylelint"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "1.7.6",
+    "@vkontakte/vk-qr": "3.0.0",
+    "opus-recorder": "^8.0.5",
+    "pinia": "3.0.4",
+    "vue": "3.5.40",
+    "vue-router": "5.0.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@stylistic/eslint-plugin": "5.10.0",
+    "@stylistic/stylelint-config": "5.0.0",
+    "@stylistic/stylelint-plugin": "5.2.0",
+    "@types/wicg-file-system-access": "2023.10.7",
+    "@vitejs/plugin-vue-jsx": "5.1.5",
+    "@vkontakte/vkui-tokens": "4.78.1",
+    "@vue/compiler-sfc": "3.5.40",
+    "electron": "44.4.3",
+    "electron-builder": "26.15.3",
+    "eslint": "10.4.0",
+    "eslint-import-resolver-typescript": "4.4.4",
+    "eslint-plugin-import-x": "4.16.2",
+    "eslint-plugin-simple-import-sort": "13.0.0",
+    "globals": "17.6.0",
+    "husky": "9.1.7",
+    "innosetup-compiler": "6.3.1",
+    "lint-staged": "17.0.5",
+    "stylelint": "17.12.0",
+    "stylelint-config-standard": "40.0.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.60.0",
+    "user-agent-data-types": "0.4.3",
+    "vite": "8.0.14",
+    "vite-plugin-electron": "1.0.0-beta.13",
+    "vitest": "4.1.7"
+  }
+}

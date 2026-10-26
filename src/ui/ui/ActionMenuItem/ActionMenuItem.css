@@ -1,0 +1,20 @@
+.ActionMenuItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_10);
+  padding: var(--vkd--space_8) var(--vkd--space_10);
+  border-radius: var(--vkd--radius_sm);
+  font: var(--vkd--font_body);
+  text-align: left;
+  transition: background-color var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.ActionMenuItem:hover,
+.ActionMenuItem:focus {
+  background-color: var(--vkui--color_transparent--hover);
+}
+
+.ActionMenuItem:active {
+  background-color: var(--vkui--color_transparent--active);
+}

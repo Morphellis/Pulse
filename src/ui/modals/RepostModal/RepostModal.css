@@ -1,0 +1,22 @@
+.RepostModal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_12);
+  width: 440px;
+  max-width: 100%;
+  padding-top: var(--vkd--space_4);
+}
+
+.RepostModal__description {
+  font: var(--vkd--font_body);
+  color: var(--vkui--color_text_secondary);
+}
+
+.RepostModal__input {
+  width: 100%;
+}
+
+.RepostModal__error {
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_negative);
+}

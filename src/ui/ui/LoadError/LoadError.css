@@ -1,0 +1,14 @@
+.LoadError {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--vkd--space_12);
+  margin: var(--vkd--space_24) 0;
+  padding: var(--vkd--space_24);
+  color: var(--vkui--color_text_secondary);
+  font: var(--vkd--font_body);
+  text-align: center;
+  border-radius: var(--vkd--radius_md);
+  background: var(--vkui--color_background_secondary);
+}

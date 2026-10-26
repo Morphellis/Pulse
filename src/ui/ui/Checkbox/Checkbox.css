@@ -1,0 +1,25 @@
+.Checkbox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: var(--vkd--space_6) var(--vkd--space_8);
+  margin: 0 calc(-1 * var(--vkd--space_8));
+  gap: var(--vkd--space_10);
+  border-radius: var(--vkd--radius_sm);
+  font: var(--vkd--font_body);
+  cursor: pointer;
+  transition: background-color var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.Checkbox:hover {
+  background-color: var(--vkui--color_transparent--hover);
+}
+
+.Checkbox__icon {
+  flex: none;
+  color: var(--vkui--color_icon_accent_themed);
+}
+
+.Checkbox--off .Checkbox__icon {
+  color: var(--vkui--color_icon_tertiary);
+}

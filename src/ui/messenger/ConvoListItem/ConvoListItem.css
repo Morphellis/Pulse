@@ -1,0 +1,130 @@
+.ConvoListItem {
+  display: grid;
+  position: relative;
+  grid-template-areas:
+    'avatar name name name'
+    'avatar message indicators status';
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: auto 1fr auto auto;
+  row-gap: var(--vkd--space_2);
+  padding: var(--vkd--space_8) var(--vkd--space_10);
+  margin: var(--vkd--space_2) 0;
+  border-radius: var(--vkd--radius_md);
+  font: var(--vkd--font_body);
+  cursor: pointer;
+  transition: background var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.ConvoListItem:not(.ConvoListItem--active):hover {
+  background: var(--vkui--color_transparent--hover);
+}
+
+.ConvoListItem--active {
+  background: var(--vkui--color_transparent--active);
+}
+
+.ConvoListItem__avatar {
+  grid-area: avatar;
+  margin-right: var(--vkd--space_12);
+}
+
+.ConvoListItem--compact .ConvoListItem__avatar {
+  margin-right: 0;
+}
+
+.ConvoListItem__name {
+  grid-area: name;
+  align-self: center;
+
+  display: flex;
+  align-items: flex-end;
+  gap: var(--vkd--space_4);
+  overflow: hidden;
+  font: var(--vkd--font_body_strong);
+}
+
+.ConvoListItem__nameText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ConvoListItem__message {
+  grid-area: message;
+  align-self: center;
+
+  display: flex;
+  overflow: hidden;
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+.ConvoListItem__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ConvoListItem__messageAuthor {
+  color: var(--vkui--color_text_secondary--active);
+}
+
+.ConvoListItem__date {
+  white-space: pre;
+  color: var(--vkui--color_text_tertiary);
+  font-variant-numeric: tabular-nums;
+  flex: none;
+}
+
+.ConvoListItem__indicators {
+  grid-area: indicators;
+  align-self: center;
+  display: flex;
+  gap: var(--vkd--space_6);
+}
+
+.ConvoListItem__indicators:not(:empty) {
+  margin-left: var(--vkd--space_6);
+}
+
+.ConvoListItem__mentioned {
+  width: 20px;
+  height: 20px;
+  padding: var(--vkd--space_4);
+  color: var(--vkui--color_text_contrast_themed);
+  background: var(--vkui--color_background_accent_themed);
+  border-radius: 50%;
+}
+
+.ConvoListItem__compactMentioned {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--vkui--color_background_content);
+}
+
+.ConvoListItem__compactCounter {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  border: 2px solid var(--vkui--color_background_content);
+  min-width: 24px;
+}
+
+.ConvoListItem__status {
+  grid-area: status;
+  align-self: center;
+  margin-left: var(--vkd--space_6);
+}
+
+/* Аватарка открывает карточку собеседника, поэтому отзывается на наведение */
+.ConvoListItem__avatar--clickable {
+  cursor: pointer;
+  transition: opacity var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.ConvoListItem__avatar--clickable:hover {
+  opacity: 0.85;
+}

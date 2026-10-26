@@ -1,0 +1,172 @@
+@font-face {
+  font-family: Roboto VK;
+  ascent-override: 100%;
+  font-weight: 400;
+  font-display: block;
+  src: url('assets/Roboto-VK-400.woff2');
+}
+
+@font-face {
+  font-family: Roboto VK;
+  ascent-override: 100%;
+  font-weight: 500;
+  font-display: block;
+  src: url('assets/Roboto-VK-500.woff2');
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+img, svg {
+  vertical-align: middle;
+}
+
+:where(button) {
+  all: unset;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+}
+
+:where(a) {
+  all: unset;
+  cursor: pointer;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:focus {
+  outline: none;
+}
+
+:root {
+  --fontFamily: 'BlinkMacSystemFont', 'Roboto VK';
+  --fontSize: 14px;
+  --lineHeight: 18px;
+  --font: var(--fontSize) / var(--lineHeight) var(--fontFamily);
+  --smallFontSize: 13px;
+  --smallLineHeight: 14px;
+  --smallFont: var(--smallFontSize) / var(--lineHeight) var(--fontFamily);
+
+  --messageDateFontSize: 11px;
+  --messageDateLineHeight: 11px;
+  --convoHistoryMaxWidth: 740px;
+  --convoHistoryIndent: 16px;
+
+  --fastTransition: 0.15s;
+  --mediumTransition: 0.2s;
+  --slowTransition: 0.3s;
+
+  --zIndexModal: 1;
+  --zIndexPopper: 2;
+  --zIndexPopperBackdropBypass: 3;
+
+  /*
+    Шкала отступов с шагом 4px. Именование по величине, а не по назначению:
+    так проще держать ритм, не выдумывая семантику под каждый случай
+  */
+  --vkd--space_2: 2px;
+  --vkd--space_4: 4px;
+  --vkd--space_6: 6px;
+  --vkd--space_8: 8px;
+  --vkd--space_10: 10px;
+  --vkd--space_12: 12px;
+  --vkd--space_16: 16px;
+  --vkd--space_20: 20px;
+  --vkd--space_24: 24px;
+  --vkd--space_32: 32px;
+
+  --vkd--radius_xs: 6px;
+  --vkd--radius_sm: 8px;
+  --vkd--radius_md: 12px;
+  --vkd--radius_lg: 16px;
+  --vkd--radius_xl: 20px;
+  --vkd--radius_pill: 999px;
+
+  /* Типографика: интерлиньяж крупнее исходного, чтобы текст дышал */
+  --vkd--font_caption: 500 12px / 16px var(--fontFamily);
+  --vkd--font_small: 13px / 18px var(--fontFamily);
+  --vkd--font_body: 14px / 20px var(--fontFamily);
+  --vkd--font_body_strong: 500 14px / 20px var(--fontFamily);
+  --vkd--font_subtitle: 500 15px / 20px var(--fontFamily);
+  --vkd--font_title: 600 17px / 24px var(--fontFamily);
+  --vkd--font_heading: 600 22px / 28px var(--fontFamily);
+
+  /* Тени мягкие и низкоконтрастные: поверхности разделяем в первую очередь границей */
+  --vkd--shadow_sm: 0 1px 2px rgb(0 0 0 / 0.06);
+  --vkd--shadow_md: 0 4px 12px rgb(0 0 0 / 0.08), 0 1px 3px rgb(0 0 0 / 0.05);
+  --vkd--shadow_lg: 0 16px 40px rgb(0 0 0 / 0.14), 0 2px 8px rgb(0 0 0 / 0.08);
+
+  /*
+    Кривая с резким стартом и мягким торможением: движение читается как быстрое,
+    даже когда длится больше 200мс
+  */
+  --vkd--ease: cubic-bezier(0.2, 0, 0, 1);
+  --vkd--ease_out: cubic-bezier(0.16, 1, 0.3, 1);
+  --vkd--duration_fast: 120ms;
+  --vkd--duration_medium: 180ms;
+  --vkd--duration_slow: 260ms;
+
+  --vkd--sidebar_width: 68px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --vkd--duration_fast: 1ms;
+    --vkd--duration_medium: 1ms;
+    --vkd--duration_slow: 1ms;
+    --fastTransition: 1ms;
+    --mediumTransition: 1ms;
+    --slowTransition: 1ms;
+  }
+}
+
+[data-scheme] {
+  --vkd--color_field_background_in_layer: var(--vkui--color_field_background);
+  --vkd--color_background_convo_history: var(--vkui--color_background);
+  --vkd--color_background_message_out: #cce4ff;
+  --vkd--color_background_message: #fff;
+  --vkd--color_background_composer: #fff;
+}
+
+[data-scheme='vkui-dark'], [data-scheme='vkcom-dark'] {
+  --vkd--color_background_message_out: #454647;
+  --vkd--color_background_message: #333;
+  --vkd--color_background_composer: #292929;
+
+  /* На тёмном фоне мягкие тени не читаются, поэтому делаем их плотнее */
+  --vkd--shadow_sm: 0 1px 2px rgb(0 0 0 / 0.24);
+  --vkd--shadow_md: 0 4px 12px rgb(0 0 0 / 0.32), 0 1px 3px rgb(0 0 0 / 0.24);
+  --vkd--shadow_lg: 0 16px 40px rgb(0 0 0 / 0.48), 0 2px 8px rgb(0 0 0 / 0.32);
+}
+
+[data-scheme='vkui-dark'] {
+  /* Цвета из vkcom-dark, чтобы не было выжигания глаз от #fff */
+  --vkui--color_background_accent_themed: #e1e3e6;
+  --vkui--color_text_accent_themed: #e1e3e6;
+  --vkui--color_icon_accent_themed: #e1e3e6;
+}
+
+[data-scheme='vkcom-dark'] {
+  --vkd--color_field_background_in_layer: var(--vkui--color_background_content);
+}
+
+[data-scheme='vkcom-light'] {
+  /* themed вариант почему-то темнее, чем обычный, и только на vkcom теме */
+  --vkui--color_text_accent_themed: var(--vkui--color_text_accent);
+  --vkui--color_text_accent_themed--hover: var(--vkui--color_text_accent--hover);
+  --vkui--color_text_accent_themed--active: var(--vkui--color_text_accent--active);
+
+  --vkui--color_icon_accent_themed: var(--vkui--color_icon_accent);
+  --vkui--color_icon_accent_themed--hover: var(--vkui--color_icon_accent--hover);
+  --vkui--color_icon_accent_themed--active: var(--vkui--color_icon_accent--active);
+}

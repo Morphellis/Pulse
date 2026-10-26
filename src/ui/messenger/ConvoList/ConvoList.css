@@ -1,0 +1,53 @@
+.ConvoList__header {
+  display: flex;
+  align-items: center;
+  flex: none;
+  height: 56px;
+  padding: 0 var(--vkd--space_16);
+  border-bottom: 1px solid var(--vkui--color_separator_primary);
+}
+
+.ConvoList--compact .ConvoList__header {
+  justify-content: center;
+  padding: 0;
+}
+
+.ConvoList__headerTitle {
+  font: var(--vkd--font_title);
+}
+
+.ConvoList__headerIcon {
+  color: var(--vkui--color_icon_secondary);
+}
+
+.ConvoList__folders {
+  flex: none;
+  padding: 0 var(--vkd--space_12);
+  overflow: hidden overlay;
+}
+
+.ConvoList__list {
+  overflow: overlay;
+  height: 100%;
+  padding: var(--vkd--space_4) var(--vkd--space_8) var(--vkd--space_12);
+}
+
+.ConvoList__folders + .ConvoList__list {
+  padding-top: 0;
+}
+
+.ConvoList__empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: var(--vkd--space_24);
+  text-align: center;
+  font: var(--vkd--font_body);
+  color: var(--vkui--color_text_secondary);
+}
+
+.ConvoList__spinner {
+  display: flex;
+  margin: var(--vkd--space_16) auto;
+}

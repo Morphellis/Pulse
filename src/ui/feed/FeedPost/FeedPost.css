@@ -1,0 +1,260 @@
+.FeedPost {
+  display: flex;
+  flex-direction: column;
+  padding: var(--vkd--space_16);
+  background: var(--vkui--color_background_content);
+  border-radius: var(--vkd--radius_lg);
+  /*
+    Поверхность отделяем тонкой внутренней границей вместо тени: на тёмной теме
+    тень почти не видна, а граница работает одинаково в обеих
+  */
+  box-shadow: inset 0 0 0 1px var(--vkui--color_separator_primary);
+}
+
+.FeedPost__header {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_12);
+}
+
+.FeedPost__avatar {
+  flex: none;
+  line-height: 0;
+  border-radius: 50%;
+  transition: opacity var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.FeedPost__avatar:hover {
+  opacity: 0.85;
+}
+
+.FeedPost__headerText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_2);
+  overflow: hidden;
+}
+
+.FeedPost__author {
+  align-self: flex-start;
+  max-width: 100%;
+  font: var(--vkd--font_subtitle);
+  color: var(--vkui--color_text_primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.FeedPost__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_8);
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+.FeedPost__meta .Link {
+  color: inherit;
+}
+
+.FeedPost__badge {
+  padding: 0 var(--vkd--space_6);
+  font: var(--vkd--font_caption);
+  color: var(--vkui--color_text_tertiary);
+  background: var(--vkui--color_background_secondary);
+  border-radius: var(--vkd--radius_pill);
+}
+
+.FeedPost__text {
+  margin-top: var(--vkd--space_12);
+  font: var(--vkd--font_body);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.FeedPost__text--collapsed {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 10;
+  overflow: hidden;
+}
+
+.FeedPost__showMore {
+  align-self: flex-start;
+  margin-top: var(--vkd--space_6);
+  font: var(--vkd--font_body_strong);
+  color: var(--vkui--color_text_link);
+}
+
+.FeedPost__attaches {
+  margin-top: var(--vkd--space_12);
+}
+
+/*
+  Скругление живёт на крайних ячейках сетки фотографий, а не на контейнере:
+  сама сетка не обрезает содержимое
+*/
+.FeedPost__attaches .AttachPhotos__row:first-child .AttachPhotos__photo:first-child {
+  border-top-left-radius: var(--vkd--radius_md);
+}
+
+.FeedPost__attaches .AttachPhotos__row:first-child .AttachPhotos__photo:last-child {
+  border-top-right-radius: var(--vkd--radius_md);
+}
+
+.FeedPost__attaches .AttachPhotos__row:last-child .AttachPhotos__photo:first-child {
+  border-bottom-left-radius: var(--vkd--radius_md);
+}
+
+.FeedPost__attaches .AttachPhotos__row:last-child .AttachPhotos__photo:last-child {
+  border-bottom-right-radius: var(--vkd--radius_md);
+}
+
+.FeedPost__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_4);
+  margin: var(--vkd--space_12) calc(-1 * var(--vkd--space_8)) 0;
+  padding-top: var(--vkd--space_8);
+  border-top: 1px solid var(--vkui--color_separator_primary);
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+.FeedPost__counter {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_6);
+  padding: 0 var(--vkd--space_8);
+}
+
+.FeedPost__counter--views {
+  margin-left: auto;
+  color: var(--vkui--color_text_tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.FeedPost__clickable {
+  cursor: pointer;
+}
+
+.FeedPost__author.FeedPost__clickable:hover {
+  color: var(--vkui--color_text_link);
+}
+
+/* Действия - таблетки высотой 32px: попасть мышью легко, а строка остаётся низкой */
+.FeedPost__action {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_6);
+  height: 32px;
+  padding: 0 var(--vkd--space_10);
+  font: var(--vkd--font_small);
+  font-variant-numeric: tabular-nums;
+  color: var(--vkui--color_text_secondary);
+  background: none;
+  border: none;
+  border-radius: var(--vkd--radius_pill);
+  cursor: pointer;
+  transition:
+    background-color var(--vkd--duration_fast) var(--vkd--ease),
+    color var(--vkd--duration_fast) var(--vkd--ease),
+    transform var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.FeedPost__action:hover {
+  color: var(--vkui--color_text_primary);
+  background: var(--vkui--color_transparent--hover);
+}
+
+.FeedPost__action:active {
+  transform: scale(0.94);
+}
+
+.FeedPost__action--liked {
+  color: var(--vkui--color_text_negative);
+}
+
+.FeedPost__action--liked:hover {
+  color: var(--vkui--color_text_negative);
+  background: var(--vkui--color_background_negative_tint);
+}
+
+/* Отдельная анимация на иконку: сердце подпрыгивает в момент постановки лайка */
+.FeedPost__action--liked svg {
+  animation: like-pop var(--vkd--duration_slow) var(--vkd--ease_out);
+}
+
+.FeedPost__action--reposted {
+  color: var(--vkui--color_text_positive);
+}
+
+@keyframes like-pop {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .FeedPost__action--liked svg {
+    animation: none;
+  }
+}
+
+.FeedRepost {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--vkd--space_12);
+  padding-left: var(--vkd--space_12);
+  border-left: 2px solid var(--vkui--color_separator_primary);
+}
+
+.FeedRepost__header {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_8);
+}
+
+.FeedRepost__avatar {
+  flex: none;
+  line-height: 0;
+}
+
+.FeedRepost__headerText {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.FeedRepost__author {
+  align-self: flex-start;
+  max-width: 100%;
+  font: var(--vkd--font_body_strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.FeedRepost__date {
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+.FeedRepost__text {
+  margin-top: var(--vkd--space_8);
+  font: var(--vkd--font_body);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.FeedRepost__attaches {
+  margin-top: var(--vkd--space_8);
+}

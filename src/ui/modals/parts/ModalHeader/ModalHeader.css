@@ -1,0 +1,22 @@
+.ModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--vkd--space_12);
+  height: 56px;
+  padding: 0 var(--vkd--space_12) 0 var(--vkd--space_20);
+  font: var(--vkd--font_title);
+}
+
+/* Фон при наведении рисует вложенный ButtonIcon, обёртка только задаёт размер */
+.ModalHeader__closeIcon {
+  display: flex;
+  align-items: center;
+  flex: none;
+  cursor: pointer;
+}
+
+.ModalHeader__closeIcon .ButtonIcon {
+  width: 32px;
+  height: 32px;
+}

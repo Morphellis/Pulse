@@ -1,0 +1,7 @@
+.ModalBody {
+  min-width: min(300px, 100%);
+}
+
+.ModalBody--withPadding {
+  padding: 0 var(--vkd--space_20) var(--vkd--space_4);
+}

@@ -1,0 +1,205 @@
+.ProfileView {
+  height: 100%;
+  background: var(--vkui--color_background);
+}
+
+.ProfileView__scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--vkd--space_12);
+  height: 100%;
+  padding: var(--vkd--space_16) var(--vkd--space_12) var(--vkd--space_24);
+  overflow: hidden overlay;
+  overscroll-behavior: contain;
+}
+
+.ProfileView__scroll > * {
+  width: 100%;
+  max-width: 640px;
+}
+
+.ProfileView__card {
+  display: flex;
+  flex-direction: column;
+  background: var(--vkui--color_background_content);
+  border-radius: var(--vkd--radius_lg);
+  box-shadow: inset 0 0 0 1px var(--vkui--color_separator_primary);
+  overflow: hidden;
+}
+
+/* Обложка задаёт масштаб шапки и даёт аватару фон, из которого он выступает */
+.ProfileView__cover {
+  height: 108px;
+  background:
+    linear-gradient(
+      120deg,
+      var(--vkui--color_background_accent_themed) 0%,
+      var(--vkui--color_icon_accent) 100%
+    );
+  opacity: 0.85;
+}
+
+/*
+  position нужен обязательно: обложка полупрозрачная, а это создаёт контекст
+  наложения, из-за которого она рисуется поверх обычных соседей и накрывает аватар
+*/
+.ProfileView__identity {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--vkd--space_16);
+  padding: 0 var(--vkd--space_20) var(--vkd--space_16);
+  margin-top: -40px;
+}
+
+.ProfileView__avatar {
+  flex: none;
+  box-shadow: 0 0 0 4px var(--vkui--color_background_content);
+}
+
+.ProfileView__names {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_2);
+  padding-bottom: var(--vkd--space_4);
+  overflow: hidden;
+}
+
+.ProfileView__name {
+  margin: 0;
+  font: var(--vkd--font_heading);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ProfileView__status {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_6);
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+.ProfileView__status--online::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--vkui--color_icon_positive);
+}
+
+.ProfileView__external {
+  margin-left: auto;
+  padding-bottom: var(--vkd--space_4);
+  flex: none;
+}
+
+.ProfileView__stats {
+  display: flex;
+  gap: var(--vkd--space_24);
+  padding: var(--vkd--space_16) var(--vkd--space_20);
+  border-top: 1px solid var(--vkui--color_separator_primary);
+}
+
+.ProfileView__stat {
+  display: flex;
+  align-items: baseline;
+  gap: var(--vkd--space_6);
+}
+
+.ProfileView__statValue {
+  font: var(--vkd--font_subtitle);
+  font-variant-numeric: tabular-nums;
+}
+
+.ProfileView__statLabel {
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+.ProfileView__sectionTitle {
+  padding: var(--vkd--space_16) var(--vkd--space_20) var(--vkd--space_12);
+  font: var(--vkd--font_subtitle);
+}
+
+.ProfileView__friends {
+  display: flex;
+  gap: var(--vkd--space_8);
+  padding: 0 var(--vkd--space_16) var(--vkd--space_16);
+  overflow: overlay hidden;
+}
+
+.ProfileFriend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--vkd--space_6);
+  flex: none;
+  width: 72px;
+  padding: var(--vkd--space_8) var(--vkd--space_4);
+  border-radius: var(--vkd--radius_md);
+  cursor: pointer;
+  transition: background-color var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.ProfileFriend:hover {
+  background: var(--vkui--color_transparent--hover);
+}
+
+.ProfileFriend__name {
+  max-width: 100%;
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ProfileView__posts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_12);
+}
+
+.ProfileView__posts .ProfileView__sectionTitle {
+  padding: var(--vkd--space_4) var(--vkd--space_4) 0;
+}
+
+.ProfileView__placeholder {
+  padding: var(--vkd--space_20);
+  text-align: center;
+  font: var(--vkd--font_body);
+  color: var(--vkui--color_text_secondary);
+}
+
+.ProfileView__spinner {
+  align-self: center;
+  margin: var(--vkd--space_16) 0;
+}
+
+/* Идентификатор страницы нужен для слежки и поиска, поэтому показан отдельной строкой */
+.ProfileView__idRow {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_8);
+  padding: 0 var(--vkd--space_20) var(--vkd--space_8);
+}
+
+.ProfileView__idLabel {
+  color: var(--vkui--color_text_secondary);
+}
+
+.ProfileView__idValue {
+  font-weight: 500;
+  user-select: text;
+}
+
+.ProfileView__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--vkd--space_8);
+  padding: 0 var(--vkd--space_20) var(--vkd--space_16);
+}

@@ -1,0 +1,21 @@
+name: run lint, test, tsc and build
+
+on: [push]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.15
+          cache: yarn
+      - name: Install dependencies
+        run: yarn
+      - name: Lint
+        run: yarn lint
+      - name: Test
+        run: yarn test
+      - name: Build code (with tsc)
+        run: yarn dist

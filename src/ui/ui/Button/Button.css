@@ -1,0 +1,115 @@
+.Button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--vkd--radius_sm);
+  padding: 0 var(--vkd--space_16);
+  font: var(--vkd--font_body_strong);
+  user-select: none;
+  transition:
+    background-color var(--vkd--duration_fast) var(--vkd--ease),
+    color var(--vkd--duration_fast) var(--vkd--ease),
+    transform var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+/* Нажатие показываем сжатием, а не сдвигом содержимого: жест читается целиком */
+.Button:active {
+  transform: scale(0.97);
+}
+
+.Button[disabled] {
+  pointer-events: none;
+  opacity: 0.48;
+}
+
+.Button__in {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_6);
+}
+
+.Button--loading .Button__in {
+  visibility: hidden;
+}
+
+.Button__spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.Button--wide {
+  width: 100%;
+}
+
+.Button--small {
+  height: 30px;
+  padding: 0 var(--vkd--space_12);
+  font: var(--vkd--font_small);
+  font-weight: 500;
+}
+
+.Button--medium {
+  height: 36px;
+}
+
+.Button--large {
+  height: 42px;
+  padding: 0 var(--vkd--space_20);
+  font: var(--vkd--font_subtitle);
+}
+
+.Button--primary {
+  color: var(--vkui--color_text_contrast_themed);
+  background: var(--vkui--color_background_accent_themed);
+}
+
+.Button--primary:hover,
+.Button--primary.Popper__trigger--active {
+  background: var(--vkui--color_background_accent_themed--hover);
+}
+
+.Button--secondary {
+  color: var(--vkui--color_text_primary);
+  background: var(--vkui--color_background_secondary);
+}
+
+.Button--secondary:hover,
+.Button--secondary.Popper__trigger--active {
+  background: var(--vkui--color_background_secondary--hover);
+}
+
+.Button--tertiary {
+  color: var(--vkui--color_text_primary);
+  background: var(--vkui--color_transparent);
+}
+
+.Button--tertiary:hover,
+.Button--tertiary.Popper__trigger--active {
+  background: var(--vkui--color_transparent--hover);
+}
+
+.Button--destructive {
+  color: var(--vkui--color_text_contrast);
+  background: var(--vkui--color_background_negative);
+}
+
+.Button--destructive:hover,
+.Button--destructive.Popper__trigger--active {
+  background: var(--vkui--color_background_negative--hover);
+}
+
+.Button--outline {
+  color: var(--vkui--color_text_accent_themed);
+  background: var(--vkui--color_transparent);
+  box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_accent_themed);
+}
+
+.Button--outline:hover,
+.Button--outline.Popper__trigger--active {
+  background: var(--vkui--color_transparent--hover);
+}

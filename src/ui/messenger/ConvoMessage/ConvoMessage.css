@@ -1,0 +1,163 @@
+.ConvoMessage {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  max-width: 100%;
+  padding: var(--vkd--space_8) var(--vkd--space_12);
+  background-color: var(--vkd--color_background_message);
+  border-radius: var(--vkd--radius_lg);
+  font: var(--vkd--font_body);
+  box-shadow: var(--vkd--shadow_sm);
+  overflow-wrap: break-word;
+  /* для поддержки нескольких пробелов подряд можно заюзать pre-wrap */
+  white-space: pre-line;
+  user-select: text;
+}
+
+.ConvoMessage--out {
+  background-color: var(--vkd--color_background_message_out);
+}
+
+.ConvoMessage__author {
+  color: var(--vkui--color_text_link);
+  font: var(--vkd--font_caption);
+  margin-bottom: var(--vkd--space_2);
+}
+
+.ConvoMessage__time {
+  position: relative;
+  float: right;
+  font: var(--messageDateFontSize) / var(--messageDateLineHeight) var(--fontFamily);
+  margin: 4px 0 4px 6px;
+  bottom: -6px;
+  color: var(--vkui--color_text_secondary);
+  user-select: none;
+}
+
+.ConvoMessage--out .ConvoMessage__time {
+  color: var(--vkui--color_text_accent_themed);
+}
+
+.ConvoMessage__status {
+  display: inline-flex;
+  align-items: center;
+  width: 14px;
+  height: var(--messageDateFontSize);
+  vertical-align: bottom;
+  margin-left: 3px;
+}
+
+.ConvoMessage__empty {
+  color: var(--vkui--color_text_secondary);
+}
+
+/*
+  Удалённое сообщение: мягкая подложка и полоса слева вместо рамки по контуру.
+  Рамка спорила с закруглением пузыря и выглядела как ошибка вёрстки
+*/
+.ConvoMessage--deleted {
+  background-color: var(--vkui--color_background_negative_tint);
+  box-shadow: inset 2px 0 0 var(--vkui--color_icon_negative), var(--vkd--shadow_sm);
+}
+
+.ConvoMessage__deletedLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_4);
+  margin-bottom: var(--vkd--space_4);
+  font: var(--vkd--font_caption);
+  color: var(--vkui--color_text_negative);
+  opacity: 0.9;
+}
+
+/* Пометка о правках кликабельна: раскрывает прежние версии */
+.ConvoMessage__editedButton {
+  padding: 0;
+  font: inherit;
+  color: var(--vkui--color_text_link);
+  cursor: pointer;
+  border-bottom: 1px dashed currentcolor;
+  transition: opacity var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.ConvoMessage__editedButton:hover {
+  opacity: 0.75;
+}
+
+.ConvoMessage__editedButton--active {
+  border-bottom-style: solid;
+}
+
+/*
+  Неразрывные пробелы вокруг точки: у пузыря white-space: pre-line,
+  и обычные пробелы по краям схлопываются, приклеивая время к подписи
+*/
+.ConvoMessage__editedButton::after {
+  content: '\a0·\a0';
+  color: var(--vkui--color_text_secondary);
+  border-bottom: none;
+}
+
+/*
+  Прежние версии: столбик с вертикальной направляющей, как ветка изменений.
+  Зачёркивание убрано - на длинном тексте оно нечитаемо
+*/
+.ConvoMessage__editHistory {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_6);
+  margin-top: var(--vkd--space_8);
+  padding-left: var(--vkd--space_10);
+  /* Внутри пузыря обычный разделитель почти не виден, берём контрастнее */
+  border-left: 2px solid var(--vkui--color_icon_secondary);
+}
+
+.ConvoMessage__previousText {
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+/* Сообщение не ушло из-за сети: подсказка и действия прямо в пузыре */
+.ConvoMessage__failed {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--vkd--space_8);
+  margin-top: var(--vkd--space_6);
+  padding-top: var(--vkd--space_6);
+  border-top: 1px solid var(--vkui--color_separator_primary);
+  font: var(--vkd--font_caption);
+  white-space: normal;
+}
+
+.ConvoMessage__failedText {
+  color: var(--vkui--color_text_negative);
+}
+
+.ConvoMessage__failedAction {
+  font: var(--vkd--font_caption);
+  color: var(--vkui--color_text_link);
+}
+
+.ConvoMessage__failedAction--danger {
+  color: var(--vkui--color_text_negative);
+}
+
+/* Сведения о прочтении: раскрываются двойным кликом по своему сообщению */
+.ConvoMessage__readInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_4);
+  margin-top: var(--vkd--space_6);
+  padding-top: var(--vkd--space_6);
+  border-top: 1px solid var(--vkui--color_separator_primary);
+  font: var(--vkd--font_caption);
+  color: var(--vkui--color_text_secondary);
+  white-space: normal;
+}
+
+.ConvoMessage__author + .ConvoMessage__attaches,
+.ConvoMessage__text + .ConvoMessage__attaches,
+.ConvoMessage__reply + .ConvoMessage__attaches {
+  margin-top: 6px;
+}

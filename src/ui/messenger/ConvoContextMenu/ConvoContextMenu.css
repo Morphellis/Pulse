@@ -1,0 +1,37 @@
+/*
+  Прозрачная подложка ловит клик мимо меню и правую кнопку по соседней беседе.
+  Затемнения нет намеренно, как и в MessageContextMenu
+*/
+.ConvoContextMenu__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+.ConvoContextMenu {
+  position: fixed;
+  z-index: 101;
+  /* До первого замера позиция ещё не выправлена, поэтому не показываем меню */
+  opacity: 0;
+}
+
+.ConvoContextMenu--positioned {
+  opacity: 1;
+  animation: convo-context-menu-appear var(--vkd--duration_fast) var(--vkd--ease_out);
+}
+
+@keyframes convo-context-menu-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ConvoContextMenu__actions {
+  min-width: 220px;
+}

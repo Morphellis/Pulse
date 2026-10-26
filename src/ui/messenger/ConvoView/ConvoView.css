@@ -1,0 +1,22 @@
+.ConvoView {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: var(--vkd--color_background_convo_history);
+}
+
+/* Панель выделения занимает место композера, поэтому и отступы у неё те же */
+.ConvoView__selectionPanel {
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--convoHistoryIndent) var(--convoHistoryIndent);
+}
+
+.ConvoWrapper__loadError,
+.ConvoWrapper__spinner {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  margin: auto;
+}

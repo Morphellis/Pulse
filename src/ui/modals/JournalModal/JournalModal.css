@@ -1,0 +1,70 @@
+.JournalModal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_12);
+  width: 560px;
+  max-width: 100%;
+  max-height: 60vh;
+  padding-top: var(--vkd--space_4);
+  overflow: hidden overlay;
+}
+
+.JournalModal__empty {
+  padding: var(--vkd--space_24) 0;
+  text-align: center;
+  font: var(--vkd--font_body);
+  color: var(--vkui--color_text_secondary);
+}
+
+.JournalEntry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_4);
+  padding: var(--vkd--space_12);
+  background: var(--vkui--color_background_secondary);
+  border-radius: var(--vkd--radius_md);
+}
+
+.JournalEntry__head {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_8);
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+.JournalEntry__kind {
+  padding: 0 var(--vkd--space_6);
+  font: var(--vkd--font_caption);
+  color: var(--vkui--color_text_contrast_themed);
+  background: var(--vkui--color_background_accent_themed);
+  border-radius: var(--vkd--radius_pill);
+}
+
+.JournalEntry__kind--deleted {
+  background: var(--vkui--color_background_negative);
+  color: var(--vkui--color_text_contrast);
+}
+
+.JournalEntry__author {
+  font: var(--vkd--font_body_strong);
+  color: var(--vkui--color_text_primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.JournalEntry__time {
+  margin-left: auto;
+  flex: none;
+}
+
+.JournalEntry__text {
+  font: var(--vkd--font_body);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.JournalEntry__label {
+  color: var(--vkui--color_text_secondary);
+}

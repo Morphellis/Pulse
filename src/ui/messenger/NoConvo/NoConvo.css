@@ -1,0 +1,12 @@
+.NoConvo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--vkd--space_8);
+  text-align: center;
+  height: 100%;
+  padding: var(--vkd--space_32);
+  font: var(--vkd--font_body);
+  color: var(--vkui--color_text_secondary);
+}

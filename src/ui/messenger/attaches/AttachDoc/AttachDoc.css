@@ -1,0 +1,62 @@
+.AttachDoc {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_10);
+  padding: var(--vkd--space_8);
+  border-radius: var(--vkd--radius_md);
+  background: var(--vkui--color_background_secondary);
+  color: var(--vkui--color_text_primary);
+  transition: background-color var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.AttachDoc:hover {
+  background: var(--vkui--color_background_secondary--hover);
+  text-decoration: none;
+}
+
+/* Плашка с расширением вместо значка: не нужен набор иконок под каждый тип */
+.AttachDoc__ext {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--vkd--radius_sm);
+  background: var(--vkui--color_background_accent_themed);
+  color: var(--vkui--color_text_contrast_themed);
+  font: var(--vkd--font_caption);
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.AttachDoc__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: var(--vkd--space_2);
+}
+
+.AttachDoc__title {
+  font: var(--vkd--font_body_strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.AttachDoc__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_8);
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+.AttachDoc__unsafe {
+  color: var(--vkui--color_text_negative);
+}
+
+.AttachDoc__download {
+  margin-left: auto;
+  flex: none;
+}

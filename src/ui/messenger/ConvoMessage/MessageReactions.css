@@ -1,0 +1,50 @@
+.MessageReactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--vkd--space_4);
+  margin-top: var(--vkd--space_6);
+}
+
+.MessageReactions__slot {
+  display: flex;
+}
+
+.MessageReactions__item {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_4);
+  height: 24px;
+  padding: 0 var(--vkd--space_8) 0 var(--vkd--space_6);
+  border: none;
+  border-radius: var(--vkd--radius_pill);
+  background: var(--vkui--color_background_secondary);
+  color: var(--vkui--color_text_primary);
+  cursor: pointer;
+  transition:
+    background var(--vkd--duration_fast) var(--vkd--ease_out),
+    transform var(--vkd--duration_fast) var(--vkd--ease_out);
+}
+
+.MessageReactions__item:hover {
+  background: var(--vkui--color_background_secondary_alpha);
+}
+
+.MessageReactions__item:active {
+  transform: scale(0.94);
+}
+
+/* Своя реакция выделяется заливкой: иначе не понять, что уже поставлено */
+.MessageReactions__item--mine {
+  background: var(--vkui--color_background_accent);
+  color: var(--vkui--color_text_contrast);
+}
+
+.MessageReactions__image {
+  width: 16px;
+  height: 16px;
+}
+
+.MessageReactions__count {
+  font: var(--vkd--font_caption);
+  font-variant-numeric: tabular-nums;
+}

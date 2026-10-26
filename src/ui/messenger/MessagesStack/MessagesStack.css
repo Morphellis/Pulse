@@ -1,0 +1,71 @@
+.MessagesStack {
+  display: flex;
+  align-items: flex-end;
+  padding: 4px 0;
+}
+
+.MessagesStack__avatar {
+  position: sticky;
+  bottom: 4px;
+  margin-right: 8px;
+}
+
+.MessagesStack__messages {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.MessagesStack--out .MessagesStack__messages {
+  align-items: flex-end;
+}
+
+/* Пузырь и кнопка действий стоят в ряд: у своих сообщений кнопка слева */
+.MessagesStack__message {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_4);
+  max-width: 85%;
+}
+
+.MessagesStack--out .MessagesStack__message {
+  flex-direction: row-reverse;
+}
+
+.MessagesStack__message--centered {
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.MessagesStack__message::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -100vw;
+  width: 200vw;
+  height: calc(100% + 4px * 2);
+  pointer-events: none;
+  background: var(--vkui--color_background_content_inverse);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--slowTransition), visibility var(--slowTransition);
+}
+
+.MessagesStack__message--highlighted::after {
+  opacity: 0.1;
+  visibility: visible;
+}
+
+/* Выбранное сообщение: подсветка полосой на всю ширину и кольцо вокруг пузыря */
+.MessagesStack__message--selected::after {
+  opacity: 0.14;
+  visibility: visible;
+  background: var(--vkui--color_background_accent_themed);
+}
+
+.MessagesStack__message--selected .ConvoMessage {
+  box-shadow: 0 0 0 2px var(--vkui--color_stroke_accent), var(--vkd--shadow_sm);
+}

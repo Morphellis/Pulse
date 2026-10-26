@@ -1,0 +1,428 @@
+import { MessagesForeignMessage } from 'services/contracts/api/objects/MessagesForeignMessage'
+import { MessagesMessage, MessagesMessageAction } from 'services/contracts/api/objects/MessagesMessage'
+import { MessagesMessageAttachment } from 'services/contracts/api/objects/MessagesMessageAttachment'
+import { MessagesPinnedMessage } from 'services/contracts/api/objects/MessagesPinnedMessage'
+import { MessagesReactionCounter } from 'services/contracts/api/objects/MessagesReactionCounter'
+import * as IEngine from 'services/contracts/IEngine'
+import * as Attach from 'model/Attach'
+import * as Convo from 'model/Convo'
+import * as Message from 'model/Message'
+import * as Peer from 'model/Peer'
+import { useViewerStore } from 'store/viewer'
+import { fromApiAttaches } from 'converters/AttachConverter'
+import { fromApiConvoStyle } from 'converters/ConvoConverter'
+import { isNonEmptyArray, NonEmptyArray, typeguard, unescape } from 'misc/utils'
+
+export function fromApiMessage(message: MessagesMessage): Message.Confirmed {
+  const viewer = useViewerStore()
+
+  const baseMessage: Message.BaseMessage = {
+    peerId: Peer.resolveId(message.peer_id),
+    cmid: Message.resolveCmid(message.conversation_message_id),
+    authorId: Peer.resolveOwnerId(message.from_id),
+    isOut: message.out === 1,
+    sentAt: message.date * 1000,
+    updatedAt: message.update_time
+      ? message.update_time * 1000
+      : undefined,
+    randomId: message.random_id ?? 0
+  }
+
+  const attaches = fromApiAttaches(message.attachments ?? [], !!message.was_listened)
+
+  if (message.action) {
+    return {
+      kind: 'Service',
+      action: fromApiMessageAction(message.action, attaches.photos?.[0]),
+      ...baseMessage
+    }
+  }
+
+  if (message.is_expired) {
+    return {
+      kind: 'Expired',
+      ...baseMessage
+    }
+  }
+
+  const replyMessage = message.reply_message && fromApiForeignMessage(
+    message.reply_message,
+    baseMessage.peerId,
+    baseMessage.cmid
+  )
+  const isRepliedToViewerMessage = !baseMessage.isOut && replyMessage?.authorId === viewer.id
+
+  return {
+    kind: 'Normal',
+    text: message.text,
+    attaches,
+    replyMessage,
+    forwardedMessages: fromApiForwardedMessages(
+      message.fwd_messages ?? [],
+      baseMessage.peerId,
+      baseMessage.cmid
+    ),
+    // is_mentioned_user is false when replying to viewer's message,
+    // though engine still sends viewer's id in marked_users
+    hasMentioned: message.is_mentioned_user || isRepliedToViewerMessage,
+    reactions: fromApiReactions(message.reactions),
+    myReactionId: message.reaction_id,
+    isImportant: !!message.important,
+    ...baseMessage
+  }
+}
+
+/**
+ * Счётчики реакций, от самой популярной к самой редкой.
+ *
+ * Пустой список превращаем в undefined: так плашка под сообщением не появляется
+ * ради нулей, а сравнение «есть ли реакции» остаётся простым
+ */
+export function fromApiReactions(
+  counters: MessagesReactionCounter[] | undefined
+): NonEmptyArray<Message.Reaction> | undefined {
+  const reactions = (counters ?? [])
+    .filter(({ count }) => count > 0)
+    .map((counter) => ({
+      id: counter.reaction_id,
+      count: counter.count
+    }))
+    .sort((a, b) => b.count - a.count)
+
+  return isNonEmptyArray(reactions) ? reactions : undefined
+}
+
+export function fromEngineMessage(
+  update: IEngine.MessageUpdate,
+  convo: Convo.Convo | undefined
+): Message.Confirmed {
+  const viewer = useViewerStore()
+
+  let rawCmid
+  let flags
+  let rawPeerId
+  let timestamp
+  let text
+  let additional
+  let attachments
+  let randomId
+  let updateTimestamp
+
+  if (update[0] === 10004) {
+    [
+      ,
+      rawCmid,
+      flags,,
+      rawPeerId,
+      timestamp,
+      text,
+      additional,
+      attachments,
+      randomId,,
+      updateTimestamp
+    ] = update
+  } else {
+    [
+      ,
+      rawCmid,
+      flags,
+      rawPeerId,
+      timestamp,
+      text,
+      additional,
+      attachments,
+      randomId,,
+      updateTimestamp
+    ] = update
+  }
+
+  const peerId = Peer.resolveId(rawPeerId)
+  // Сообщения в избранном приходят без флага out
+  const isOut = (flags & Message.flags.out) > 0 || viewer.id === peerId
+  const authorId = additional.from
+    ? Peer.resolveOwnerId(Number(additional.from))
+    : isOut
+      ? viewer.id
+      : Peer.resolveOwnerId(peerId)
+
+  const baseMessage: Message.BaseMessage = {
+    peerId: Peer.resolveId(rawPeerId),
+    cmid: Message.resolveCmid(rawCmid),
+    authorId,
+    isOut,
+    sentAt: timestamp * 1000,
+    updatedAt: updateTimestamp ? updateTimestamp * 1000 : undefined,
+    randomId
+  }
+
+  if (additional.source_act) {
+    return {
+      kind: 'Service',
+      action: fromApiMessageAction({
+        type: additional.source_act,
+        text: additional.source_text,
+        old_text: additional.source_old_text,
+        member_id: additional.source_mid
+          ? Number(additional.source_mid)
+          : undefined,
+        conversation_message_id: additional.source_chat_local_id
+          ? Number(additional.source_chat_local_id)
+          : undefined,
+        message: additional.source_message,
+        style: additional.source_style
+      }),
+      ...baseMessage
+    }
+  }
+
+  if (additional.is_expired === '1') {
+    return {
+      kind: 'Expired',
+      ...baseMessage
+    }
+  }
+
+  let attaches: Attach.Attaches = {}
+
+  if (
+    attachments.attachments &&
+    attachments.attach1_type &&
+    !attachments.attach2_type
+  ) {
+    const apiAttaches =
+      JSON.parse(attachments.attachments) as MessagesMessageAttachment[] | undefined
+
+    if (Array.isArray(apiAttaches)) {
+      attaches = fromApiAttaches(apiAttaches, (flags & Message.flags.voiceListened) > 0)
+    }
+  }
+
+  if (!Attach.kindsCount(attaches) && attachments.attach1_type) {
+    attaches.unknown = [{
+      kind: 'Unknown',
+      type: attachments.attach1_type,
+      raw: attachments
+    }]
+  }
+
+  let replyMessage: Message.Foreign | undefined
+  if (attachments.reply && convo) {
+    const replyId = JSON.parse(attachments.reply) as IEngine.ReplyMessageId
+    const replyCmid = Message.resolveCmid(replyId.conversation_message_id)
+    const message = Convo.findMessage(convo, replyCmid)
+    if (message?.kind === 'Normal') {
+      replyMessage = Message.toForeign(message)
+    }
+  }
+
+  return {
+    kind: 'Normal',
+    text: unescape(text.replace(/<br\s*\/?>/gi, '\n')),
+    attaches,
+    replyMessage,
+    forwardedMessages: undefined,
+    hasMentioned: hasMentionedInEngineMessage(update, viewer.id),
+    ...baseMessage
+  }
+}
+
+function hasMentionedInEngineMessage(update: IEngine.MessageUpdate, viewerId: Peer.OwnerId) {
+  const additional = update[0] === 10004 ? update[7] : update[6]
+
+  for (const mark of additional.marked_users ?? []) {
+    // тип маркировки: 1 = упоминание, 2 = исчезающее сообщение
+    if (mark[0] !== 1) {
+      continue
+    }
+
+    if (mark[1] === 'all') {
+      return true
+    }
+
+    if (mark[1] === 'online' && mark[2].includes(viewerId)) {
+      return true
+    }
+
+    if (Array.isArray(mark[1]) && mark[1].includes(viewerId)) {
+      return true
+    }
+  }
+
+  return false
+}
+
+function fromApiMessageAction(
+  action: MessagesMessageAction,
+  photo?: Attach.Photo
+): Message.ServiceAction {
+  switch (action.type) {
+    case 'chat_create':
+      return {
+        type: action.type,
+        title: action.text ?? ''
+      }
+
+    case 'chat_title_update':
+      return {
+        type: action.type,
+        title: action.text ?? '',
+        oldTitle: action.old_text ?? ''
+      }
+
+    case 'chat_photo_update':
+      return { type: action.type, photo }
+
+    case 'chat_photo_remove':
+    case 'chat_kick_don':
+    case 'call_transcription_failed':
+    case 'chat_invite_user_by_link':
+    case 'chat_screenshot':
+    case 'chat_group_call_started':
+    case 'chat_invite_user_by_call_join_link':
+      return { type: action.type }
+
+    case 'chat_invite_user':
+    case 'chat_kick_user':
+    case 'accepted_message_request': {
+      if (!action.member_id) {
+        return { type: 'unknown' }
+      }
+
+      return {
+        type: action.type,
+        peerId: Peer.resolveOwnerId(action.member_id)
+      }
+    }
+
+    case 'chat_invite_user_by_message_request':
+    case 'chat_invite_user_by_call':
+    case 'chat_kick_user_call_block': {
+      if (!action.member_id) {
+        return { type: 'unknown' }
+      }
+
+      const peerId = Peer.resolveId(action.member_id)
+      if (!Peer.isUserPeerId(peerId)) {
+        return { type: 'unknown' }
+      }
+
+      return { type: action.type, peerId }
+    }
+
+    case 'chat_pin_message':
+    case 'chat_unpin_message':
+      if (!action.conversation_message_id) {
+        return { type: 'unknown' }
+      }
+
+      return {
+        type: action.type,
+        cmid: Message.resolveCmid(action.conversation_message_id),
+        message: action.message ?? ''
+      }
+
+    case 'conversation_style_update':
+    case 'conversation_style_update_action':
+      return {
+        type: action.type,
+        style: action.style ? fromApiConvoStyle(action.style) : undefined
+      }
+
+    case 'custom':
+      return {
+        type: action.type,
+        message: action.message ?? ''
+      }
+
+    default:
+      typeguard(action.type)
+      console.warn('Unknown service action type', action)
+      return { type: 'unknown' }
+  }
+}
+
+function fromApiForeignMessage(
+  foreignMessage: MessagesForeignMessage,
+  rootPeerId: Peer.Id,
+  rootCmid: Message.Cmid
+): Message.Foreign {
+  const viewer = useViewerStore()
+
+  return {
+    kind: 'Foreign',
+    peerId: foreignMessage.peer_id
+      ? Peer.resolveId(foreignMessage.peer_id)
+      : undefined,
+    cmid: foreignMessage.conversation_message_id
+      ? Message.resolveCmid(foreignMessage.conversation_message_id)
+      : undefined,
+    rootPeerId,
+    rootCmid,
+    authorId: Peer.resolveOwnerId(foreignMessage.from_id),
+    isOut: foreignMessage.from_id === viewer.id,
+    sentAt: foreignMessage.date * 1000,
+    text: foreignMessage.text,
+    attaches: fromApiAttaches(foreignMessage.attachments ?? [], !!foreignMessage.was_listened),
+    replyMessage: foreignMessage.reply_message && fromApiForeignMessage(
+      foreignMessage.reply_message,
+      rootPeerId,
+      rootCmid
+    ),
+    forwardedMessages: fromApiForwardedMessages(
+      foreignMessage.fwd_messages ?? [],
+      rootPeerId,
+      rootCmid
+    ),
+    updatedAt: foreignMessage.update_time
+      ? foreignMessage.update_time * 1000
+      : undefined,
+    isUnavailable: !!foreignMessage.is_unavailable
+  }
+}
+
+function fromApiForwardedMessages(
+  apiForwardedMessages: MessagesForeignMessage[],
+  rootPeerId: Peer.Id,
+  rootCmid: Message.Cmid
+): NonEmptyArray<Message.Foreign> | undefined {
+  const forwardedMessages = apiForwardedMessages.map((foreign) => fromApiForeignMessage(
+    foreign,
+    rootPeerId,
+    rootCmid
+  ))
+
+  if (!isNonEmptyArray(forwardedMessages)) {
+    return undefined
+  }
+
+  return forwardedMessages
+}
+
+export function fromApiPinnedMessage(pinnedMessage: MessagesPinnedMessage): Message.Pinned {
+  const viewer = useViewerStore()
+
+  const peerId = Peer.resolveId(pinnedMessage.peer_id)
+  const cmid = Message.resolveCmid(pinnedMessage.conversation_message_id)
+
+  return {
+    kind: 'Pinned',
+    peerId,
+    cmid,
+    authorId: Peer.resolveOwnerId(pinnedMessage.from_id),
+    isOut: pinnedMessage.from_id === viewer.id,
+    sentAt: pinnedMessage.date * 1000,
+    text: pinnedMessage.text,
+    attaches: fromApiAttaches(pinnedMessage.attachments ?? [], true),
+    replyMessage: pinnedMessage.reply_message && fromApiForeignMessage(
+      pinnedMessage.reply_message,
+      peerId,
+      cmid
+    ),
+    forwardedMessages: fromApiForwardedMessages(
+      pinnedMessage.fwd_messages ?? [],
+      peerId,
+      cmid
+    ),
+    isUnavailable: !!pinnedMessage.is_unavailable
+  }
+}

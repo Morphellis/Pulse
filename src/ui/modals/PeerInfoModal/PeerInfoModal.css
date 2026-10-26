@@ -1,0 +1,77 @@
+.PeerInfoModal {
+  max-width: 420px;
+}
+
+.PeerInfoModal__head {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_16);
+  margin-bottom: var(--vkd--space_16);
+}
+
+.PeerInfoModal__identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_2);
+  min-width: 0;
+}
+
+.PeerInfoModal__name {
+  font: var(--vkd--font_title);
+  overflow-wrap: anywhere;
+}
+
+.PeerInfoModal__status {
+  color: var(--vkui--color_text_secondary);
+}
+
+.PeerInfoModal__status--online {
+  color: var(--vkui--color_text_positive);
+}
+
+.PeerInfoModal__link {
+  align-self: flex-start;
+}
+
+.PeerInfoModal__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_6);
+}
+
+.PeerInfoModal__row {
+  display: flex;
+  gap: var(--vkd--space_12);
+}
+
+.PeerInfoModal__rowLabel {
+  flex: none;
+  width: 130px;
+  color: var(--vkui--color_text_secondary);
+}
+
+.PeerInfoModal__rowValue {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_8);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Идентификатор выделяется мышью: его копируют в другие инструменты */
+.PeerInfoModal__id {
+  font-weight: 500;
+  user-select: text;
+}
+
+.PeerInfoModal__warning {
+  margin-top: var(--vkd--space_4);
+  color: var(--vkui--color_text_negative);
+}
+
+.PeerInfoModal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--vkd--space_8);
+  margin-top: var(--vkd--space_16);
+}

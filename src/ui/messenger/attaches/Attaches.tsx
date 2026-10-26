@@ -1,0 +1,44 @@
+import { defineComponent } from 'vue'
+import { useServices } from 'services'
+import * as Attach from 'model/Attach'
+import * as Message from 'model/Message'
+import { ClassName } from 'misc/utils'
+import { AttachVoice } from './AttachVoice/AttachVoice'
+import { AttachDoc } from 'ui/messenger/attaches/AttachDoc/AttachDoc'
+import { AttachLink } from 'ui/messenger/attaches/AttachLink/AttachLink'
+import { AttachPhotos } from 'ui/messenger/attaches/AttachPhotos/AttachPhotos'
+import { AttachSticker } from 'ui/messenger/attaches/AttachSticker/AttachSticker'
+import { AttachVideo } from 'ui/messenger/attaches/AttachVideo/AttachVideo'
+import { AttachWall } from 'ui/messenger/attaches/AttachWall/AttachWall'
+import './Attaches.css'
+
+type Props = {
+  attaches: Attach.Attaches
+  message?: Message.Message | Message.Foreign
+  class: ClassName
+}
+
+export const Attaches = defineComponent<Props>((props) => {
+  const { lang } = useServices()
+
+  return () => (
+    <div class={['Attaches', props.class]}>
+      {props.attaches.sticker && <AttachSticker sticker={props.attaches.sticker} />}
+      {props.attaches.photos && <AttachPhotos photos={props.attaches.photos} />}
+      {props.attaches.videos?.map((video) => (
+        <AttachVideo key={Attach.id(video)} video={video} peerId={props.message?.peerId} />
+      ))}
+      {props.attaches.docs?.map((doc) => <AttachDoc key={Attach.id(doc)} doc={doc} />)}
+      {props.attaches.links?.map((link) => <AttachLink link={link} />)}
+      {props.attaches.wall && <AttachWall wall={props.attaches.wall} />}
+      {props.attaches.voice && <AttachVoice voice={props.attaches.voice} message={props.message} />}
+      {props.attaches.unknown?.map((unknown) => (
+        <div class="Attaches__unknown">
+          {lang.use('me_unknown_attach')} ({unknown.type})
+        </div>
+      ))}
+    </div>
+  )
+}, {
+  props: ['attaches', 'message', 'class']
+})

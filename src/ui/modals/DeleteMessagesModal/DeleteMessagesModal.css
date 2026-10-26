@@ -1,0 +1,22 @@
+.DeleteMessagesModal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_12);
+  width: 420px;
+  max-width: 100%;
+  padding-top: var(--vkd--space_4);
+}
+
+.DeleteMessagesModal__text {
+  font: var(--vkd--font_body);
+}
+
+.DeleteMessagesModal__hint {
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+.DeleteMessagesModal__error {
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_negative);
+}

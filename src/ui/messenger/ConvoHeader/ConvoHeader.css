@@ -1,0 +1,79 @@
+.ConvoHeader {
+  display: grid;
+  grid-template-areas: 'button peer';
+  grid-template-columns: auto 1fr;
+  height: 56px;
+  padding: 0 var(--vkd--space_12);
+  gap: 0 var(--vkd--space_10);
+  flex: none;
+  border-bottom: 1px solid var(--vkui--color_separator_primary);
+  background: var(--vkui--color_background_content);
+}
+
+.ConvoHeader__back {
+  grid-area: button;
+  align-self: center;
+  width: 36px;
+  height: 36px;
+}
+
+/*
+  Шапка целиком — кнопка, открывающая карточку собеседника.
+  Прежняя раскладка с аватаркой, именем и статусом переехала внутрь неё
+*/
+.ConvoHeader__peer {
+  grid-area: peer;
+  display: grid;
+  grid-template-areas:
+    'avatar name'
+    'avatar info';
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0 var(--vkd--space_10);
+  min-width: 0;
+  height: 44px;
+  align-self: center;
+  padding: 0 var(--vkd--space_8);
+  margin-left: calc(var(--vkd--space_8) * -1);
+  border-radius: var(--vkd--radius_md);
+  cursor: pointer;
+  transition: background-color var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.ConvoHeader__peer:hover {
+  background-color: var(--vkui--color_transparent--hover);
+}
+
+.ConvoHeader__avatar {
+  grid-area: avatar;
+  align-self: center;
+}
+
+.ConvoHeader__name {
+  grid-area: name;
+  align-self: end;
+
+  display: flex;
+  align-items: flex-end;
+  gap: var(--vkd--space_4);
+  font: var(--vkd--font_subtitle);
+  overflow: hidden;
+}
+
+.ConvoHeader__nameText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ConvoHeader__info {
+  grid-area: info;
+  align-self: start;
+  font: var(--vkd--font_small);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--vkui--color_text_secondary);
+  text-align: left;
+}

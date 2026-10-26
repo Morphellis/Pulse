@@ -1,0 +1,58 @@
+import { useRouter } from 'vue-router'
+import { useServices } from 'services'
+import * as IApi from 'services/contracts/IApi'
+import * as ILang from 'services/contracts/ILang'
+import { useConvosStore } from 'store/convos'
+import { useMainSettingsStore } from 'store/mainSettings'
+import { useNewsfeedStore } from 'store/newsfeed'
+import { usePeersStore } from 'store/peers'
+import { useReadReceiptsStore } from 'store/readReceipts'
+import { useSettingsStore } from 'store/settings'
+import { useViewerStore } from 'store/viewer'
+import * as utils from 'misc/utils'
+
+/**
+ * Вытаскиваем полезные функции/переменные/etc в глобальную область видимости,
+ * чтобы пользоваться этим в DevTools для дебага
+ *
+ * Создаем отдельную переменную для window, чтобы не менять тип глобального объекта
+ * и не пользоваться глобальными переменными в коде
+ */
+
+type ExposedFeatures = {
+  mainSettings: ReturnType<typeof useMainSettingsStore>
+  settings: ReturnType<typeof useSettingsStore>
+  viewer: ReturnType<typeof useViewerStore>
+  peers: ReturnType<typeof usePeersStore>
+  convos: ReturnType<typeof useConvosStore>
+  newsfeed: ReturnType<typeof useNewsfeedStore>
+  readReceipts: ReturnType<typeof useReadReceiptsStore>
+  api: IApi.Api
+  engine: ReturnType<typeof useServices>['engine']
+  lang: ILang.Lang
+  qrCodeAuth: ReturnType<typeof useServices>['qrCodeAuth']
+  router: ReturnType<typeof useRouter>
+  auth: ReturnType<typeof useServices>['auth']
+  utils: typeof utils
+}
+const exposedWindow = window as typeof window & ExposedFeatures
+
+export function exposeFeatures() {
+  const { api, auth, engine, lang, qrCodeAuth } = useServices()
+  const router = useRouter()
+
+  exposedWindow.mainSettings = useMainSettingsStore()
+  exposedWindow.settings = useSettingsStore()
+  exposedWindow.viewer = useViewerStore()
+  exposedWindow.peers = usePeersStore()
+  exposedWindow.convos = useConvosStore()
+  exposedWindow.newsfeed = useNewsfeedStore()
+  exposedWindow.readReceipts = useReadReceiptsStore()
+  exposedWindow.api = api
+  exposedWindow.engine = engine
+  exposedWindow.lang = lang
+  exposedWindow.qrCodeAuth = qrCodeAuth
+  exposedWindow.router = router
+  exposedWindow.auth = auth
+  exposedWindow.utils = { ...utils }
+}

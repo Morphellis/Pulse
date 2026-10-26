@@ -1,0 +1,61 @@
+.RecipientList {
+  display: flex;
+  flex-direction: column;
+  height: 320px;
+  margin: 0 calc(-1 * var(--vkd--space_8));
+  padding: 0 var(--vkd--space_8);
+  overflow: hidden overlay;
+  overscroll-behavior: contain;
+}
+
+.RecipientList__placeholder {
+  padding: var(--vkd--space_24) 0;
+  text-align: center;
+  font: var(--vkd--font_body);
+  color: var(--vkui--color_text_secondary);
+}
+
+.RecipientList__spinner {
+  align-self: center;
+  margin: var(--vkd--space_16) 0;
+}
+
+.Recipient {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_12);
+  padding: var(--vkd--space_8) var(--vkd--space_10);
+  border-radius: var(--vkd--radius_md);
+  font: var(--vkd--font_body);
+  cursor: pointer;
+  transition: background-color var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.Recipient:hover {
+  background: var(--vkui--color_transparent--hover);
+}
+
+.Recipient--selected {
+  background: var(--vkui--color_transparent--active);
+}
+
+.Recipient__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Галочка в кружке: выбранных сразу видно, даже когда их много */
+.Recipient__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-left: auto;
+  padding: 3px;
+  color: var(--vkui--color_text_contrast_themed);
+  background: var(--vkui--color_background_accent_themed);
+  border-radius: 50%;
+}

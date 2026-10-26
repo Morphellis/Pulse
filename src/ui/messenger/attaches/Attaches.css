@@ -1,0 +1,11 @@
+.Attaches {
+  display: grid;
+  /* Грид (как и флекс) выставляет всем детям min-width: auto, но для гридов есть возможность */
+  /* выставить у родителя вот такой стиль, чтобы дети не выходили за 100% ширину */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+
+.Attaches__unknown {
+  color: var(--vkui--color_text_secondary);
+}

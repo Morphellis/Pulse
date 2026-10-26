@@ -1,0 +1,71 @@
+.ModalView {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+}
+
+.ModalView--hidden {
+  display: none;
+}
+
+.ModalView__backdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  cursor: pointer;
+  visibility: visible;
+}
+
+.ModalView:not(.ModalView--noBackdrop) .ModalView__backdrop {
+  background-color: var(--vkui--color_overlay_primary);
+}
+
+.ModalView__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  padding: 20px;
+  visibility: visible;
+  pointer-events: none;
+}
+
+.ModalView__container > * {
+  pointer-events: all;
+}
+
+.ModalViewAnimation-enter-active {
+  transition: opacity var(--vkd--duration_medium) var(--vkd--ease_out);
+}
+
+.ModalViewAnimation-leave-active {
+  transition: opacity var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.ModalViewAnimation-enter-from,
+.ModalViewAnimation-leave-to {
+  opacity: 0;
+}
+
+/*
+  Модалка выезжает снизу и слегка масштабируется - так появление читается
+  как приближение, а не как подмена кадра
+*/
+.ModalViewAnimation-enter-active .ModalView__container {
+  transition: transform var(--vkd--duration_slow) var(--vkd--ease_out);
+}
+
+.ModalViewAnimation-leave-active .ModalView__container {
+  transition: transform var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.ModalViewAnimation-enter-from .ModalView__container {
+  transform: translateY(12px) scale(0.97);
+}
+
+.ModalViewAnimation-leave-to .ModalView__container {
+  transform: translateY(6px) scale(0.98);
+}

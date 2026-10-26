@@ -1,0 +1,62 @@
+.ComposerAttachPreview {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  flex: none;
+  border-radius: 8px;
+  border: 1px solid rgb(0 0 0 / 0.08);
+}
+
+.ComposerAttachPreview--clickable {
+  cursor: pointer;
+}
+
+/* У файла нет картинки для превью, поэтому показываем плашку с расширением */
+.ComposerAttachPreview--doc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--vkui--color_background_secondary);
+}
+
+.ComposerAttachPreview__ext {
+  font: var(--vkd--font_subtitle);
+  text-transform: uppercase;
+  color: var(--vkui--color_text_secondary);
+  overflow: hidden;
+  padding: 0 var(--vkd--space_4);
+}
+
+.ComposerAttachPreview__voiceIcon {
+  color: var(--vkui--color_icon_secondary);
+}
+
+.ComposerAttachPreview__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.ComposerAttachPreview__progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0 0 0 / 0.6);
+  border-radius: inherit;
+}
+
+.ComposerAttachPreview__remove {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  padding: 1px;
+  color: white;
+  background: var(--vkui--color_icon_secondary);
+  border: 2px solid white;
+  border-radius: 50%;
+  /* Встаем поверх прогресса с его полупрозрачным фоном */
+  z-index: 1;
+}

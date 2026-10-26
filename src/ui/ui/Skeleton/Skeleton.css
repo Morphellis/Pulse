@@ -1,0 +1,41 @@
+/*
+  Заглушка под ещё не загруженный контент. Блик пробегает слева направо:
+  движение сообщает, что загрузка идёт, и заменяет собой спиннер
+*/
+.Skeleton {
+  display: block;
+  flex: none;
+  height: 12px;
+  border-radius: var(--vkd--radius_xs);
+  background-color: var(--vkui--color_background_secondary);
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--vkui--color_transparent--hover) 50%,
+      transparent 100%
+    );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: skeleton-shimmer 1.4s var(--vkd--ease) infinite;
+}
+
+.Skeleton--circle {
+  border-radius: 50%;
+}
+
+@keyframes skeleton-shimmer {
+  from {
+    background-position: -100% 0;
+  }
+
+  to {
+    background-position: 100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Skeleton {
+    animation: none;
+  }
+}

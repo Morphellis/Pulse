@@ -1,0 +1,30 @@
+.ReactedPeers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_4);
+  /* Реакций может набраться много, но поппер не должен вырастать во весь экран */
+  max-height: 260px;
+  overflow-y: overlay;
+  padding: var(--vkd--space_8);
+}
+
+.ReactedPeers--state {
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  min-height: 40px;
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+.ReactedPeers__item {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_8);
+  padding-right: var(--vkd--space_8);
+}
+
+.ReactedPeers__name {
+  font: var(--vkd--font_small);
+  white-space: nowrap;
+}

@@ -1,0 +1,44 @@
+.Popper__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--zIndexPopper);
+}
+
+.Popper__trigger--active {
+  /* Чтобы триггер оставался доступным и на нем мог сохраняться cursor: pointer */
+  z-index: var(--zIndexPopperBackdropBypass);
+}
+
+.Popper {
+  position: absolute;
+  z-index: var(--zIndexPopper);
+}
+
+.Popper--enter-active {
+  transition:
+    opacity var(--vkd--duration_medium) var(--vkd--ease_out),
+    transform var(--vkd--duration_medium) var(--vkd--ease_out);
+}
+
+.Popper--leave-active {
+  transition:
+    opacity var(--vkd--duration_fast) var(--vkd--ease),
+    transform var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.Popper--enter-from,
+.Popper--leave-to {
+  opacity: 0;
+  transform: scale(0.96) translateY(-4px);
+}
+
+.Popper--placement-bottom-end {
+  transform-origin: top right;
+}
+
+.Popper--placement-top-start {
+  transform-origin: bottom left;
+}

@@ -1,0 +1,84 @@
+.ColorPicker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_10);
+}
+
+.ColorPicker__head {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_12);
+}
+
+.ColorPicker__label {
+  font: var(--vkd--font_body_strong);
+}
+
+.ColorPicker__reset {
+  margin-left: auto;
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_link);
+}
+
+.ColorPicker__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--vkd--space_8);
+}
+
+.ColorSwatch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.ColorSwatch:hover {
+  transform: scale(1.1);
+}
+
+/* Обводка фоном модалки отделяет выбранный кружок от кольца выделения */
+.ColorSwatch--selected {
+  box-shadow:
+    0 0 0 2px var(--vkui--color_background_modal),
+    0 0 0 4px var(--vkui--color_stroke_accent);
+}
+
+.ColorSwatch__check {
+  color: #fff;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.4));
+}
+
+.ColorPicker__custom {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_8);
+}
+
+.ColorPicker__native {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: var(--vkd--radius_sm);
+  background: none;
+  cursor: pointer;
+}
+
+.ColorPicker__native::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.ColorPicker__native::-webkit-color-swatch {
+  border: 1px solid var(--vkui--color_field_border_alpha);
+  border-radius: var(--vkd--radius_sm);
+}
+
+.ColorPicker__hex {
+  width: 140px;
+}

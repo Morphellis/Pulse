@@ -1,0 +1,7 @@
+.ActionMenu {
+  min-width: 200px;
+  padding: var(--vkd--space_4);
+  border-radius: var(--vkd--radius_md);
+  box-shadow: var(--vkd--shadow_lg), inset 0 0 0 1px var(--vkui--color_separator_primary);
+  background-color: var(--vkui--color_background_content);
+}

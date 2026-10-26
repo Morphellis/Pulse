@@ -1,0 +1,86 @@
+.WallView {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--vkui--color_background);
+}
+
+.WallView__header {
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: var(--vkd--space_10);
+  height: 56px;
+  padding: 0 var(--vkd--space_12);
+  border-bottom: 1px solid var(--vkui--color_separator_primary);
+}
+
+.WallView__back {
+  width: 36px;
+  height: 36px;
+  flex: none;
+}
+
+.WallView__avatar {
+  flex: none;
+}
+
+.WallView__headerText {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.WallView__name {
+  font: var(--vkd--font_subtitle);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.WallView__count {
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_secondary);
+}
+
+.WallView__external {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+  border-radius: var(--vkd--radius_sm);
+  transition: background-color var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.WallView__external:hover {
+  background: var(--vkui--color_transparent--hover);
+}
+
+.WallView__list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--vkd--space_12);
+  padding: var(--vkd--space_16) var(--vkd--space_12) var(--vkd--space_24);
+  overflow: hidden overlay;
+  overscroll-behavior: contain;
+}
+
+.WallView__list > * {
+  width: 100%;
+  max-width: 640px;
+}
+
+.WallView__placeholder {
+  padding: var(--vkd--space_24) 0;
+  text-align: center;
+  font: var(--vkd--font_body);
+  color: var(--vkui--color_text_secondary);
+}
+
+.WallView__spinner {
+  align-self: center;
+  margin: var(--vkd--space_16) 0;
+}

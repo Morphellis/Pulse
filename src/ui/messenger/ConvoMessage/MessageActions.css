@@ -1,0 +1,17 @@
+/*
+  Кнопка висит рядом с пузырём и проявляется при наведении на сообщение.
+  Место под неё зарезервировано всегда, иначе сообщения бы дёргались
+*/
+.MessageActions {
+  width: 28px;
+  height: 28px;
+  align-self: center;
+  flex: none;
+  opacity: 0;
+  transition: opacity var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.MessagesStack__message:hover .MessageActions,
+.MessageActions.Popper__trigger--active {
+  opacity: 1;
+}

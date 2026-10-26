@@ -1,0 +1,17 @@
+.ConfirmModal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkd--space_12);
+  width: 420px;
+  max-width: 100%;
+  padding-top: var(--vkd--space_4);
+}
+
+.ConfirmModal__text {
+  font: var(--vkd--font_body);
+}
+
+.ConfirmModal__error {
+  font: var(--vkd--font_small);
+  color: var(--vkui--color_text_negative);
+}

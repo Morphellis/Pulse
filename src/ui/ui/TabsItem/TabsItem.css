@@ -1,0 +1,25 @@
+.TabsItem {
+  position: relative;
+  color: var(--vkui--color_text_secondary);
+  font: var(--vkd--font_body_strong);
+  margin: var(--vkd--space_8) 0;
+  padding: var(--vkd--space_6) var(--vkd--space_12);
+  border-radius: var(--vkd--radius_pill);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color var(--vkd--duration_fast) var(--vkd--ease),
+    color var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.TabsItem:hover {
+  color: var(--vkui--color_text_primary);
+  background-color: var(--vkui--color_transparent--hover);
+}
+
+/* Активная вкладка выделяется заливкой, а не рамкой с тенью: спокойнее и чище */
+.TabsItem--active,
+.TabsItem--active:hover {
+  color: var(--vkui--color_text_contrast_themed);
+  background-color: var(--vkui--color_background_accent_themed);
+}

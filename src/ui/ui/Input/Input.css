@@ -1,0 +1,64 @@
+.Input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: var(--vkui--color_field_background);
+  border-radius: var(--vkd--radius_sm);
+  /*
+    Границу рисуем внутренней тенью, а не border: при появлении фокусного кольца
+    высота поля не меняется и содержимое не дёргается
+  */
+  box-shadow: inset 0 0 0 1px var(--vkui--color_field_border_alpha);
+  transition: box-shadow var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.Input--inLayer {
+  background: var(--vkd--color_field_background_in_layer);
+}
+
+.Input:hover {
+  box-shadow: inset 0 0 0 1px var(--vkui--color_field_border_alpha--hover);
+}
+
+.Input:focus-within {
+  box-shadow:
+    inset 0 0 0 1px var(--vkui--color_stroke_accent),
+    0 0 0 3px var(--vkui--color_stroke_accent--active);
+}
+
+.Input__el {
+  background: none;
+  border: none;
+  width: 100%;
+  color: var(--vkui--color_text_primary);
+  font: var(--vkd--font_body);
+  padding: var(--vkd--space_8) var(--vkd--space_12);
+}
+
+.Input__el:disabled {
+  opacity: 0.48;
+}
+
+.Input__el::placeholder {
+  color: var(--vkui--color_text_secondary);
+}
+
+.Input--hasBefore .Input__el {
+  padding-left: 0;
+}
+
+.Input--hasAfter .Input__el {
+  padding-right: 0;
+}
+
+.Input__before,
+.Input__after {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 36px;
+  height: 100%;
+  color: var(--vkui--color_icon_secondary);
+}

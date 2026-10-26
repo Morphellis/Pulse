@@ -1,0 +1,99 @@
+import { defineStore } from 'pinia'
+import * as Convo from 'model/Convo'
+import * as Lists from 'model/Lists'
+import * as Message from 'model/Message'
+import * as Peer from 'model/Peer'
+
+type LoadConvoHistoryLock = {
+  status: 'loading' | 'error'
+  startCmid: Message.Cmid
+  controller: AbortController
+}
+
+export type ViewportPosition = {
+  /** Cmid of the topmost visible message in the viewport */
+  cmid: Message.Cmid
+  /** Offset from the viewport beginning, can be negative (i.e. the message was partly invisible) */
+  offset: number
+}
+
+export type ScrollAnchor =
+  | {
+      kind: 'Message'
+      cmid: Message.Cmid
+      /**
+       * Whether to revert back to the initial history & viewport position if the message
+       * is not available in the history.
+       * Automatically captures the viewport position and puts it in origin
+       */
+      reversible?: boolean
+      origin?: ViewportPosition
+      /** Set false to disable highlight, true by default */
+      highlight?: boolean
+    }
+  | { kind: 'Unread', cmid: Message.Cmid }
+
+export type TypingUser = {
+  peerId: Peer.Id
+  type: 'text' | 'voice' | 'photo' | 'video' | 'file' | 'videomessage'
+  cancelTypingTimeoutId: number
+}
+
+type Convos = {
+  convos: Map<Peer.Id, Convo.Convo>
+  lists: Lists.Lists
+  connection: {
+    status: 'init' | 'initFailed' | 'connected' | 'syncing'
+  }
+  loadConvoHistoryLock: Map<`${Peer.Id}-${'around' | 'up' | 'down'}`, LoadConvoHistoryLock>
+  sendMessageLock: Set<Peer.Id>
+  /** Also indicates whether the convo was open at least once in the past */
+  viewportPositions: Map<Peer.Id, ViewportPosition | undefined>
+  scrollAnchors: Map<Peer.Id, ScrollAnchor>
+  typings: Map<Peer.Id, TypingUser[]>
+}
+
+export const useConvosStore = defineStore('convos', {
+  state: (): Convos => ({
+    convos: new Map(),
+    lists: Lists.defaults(),
+    connection: {
+      status: 'init'
+    },
+    loadConvoHistoryLock: new Map(),
+    sendMessageLock: new Set(),
+    viewportPositions: new Map(),
+    scrollAnchors: new Map(),
+    typings: new Map()
+  }),
+
+  actions: {
+    stopTyping(convoId: Peer.Id, typingPeerId: Peer.Id) {
+      const typingPeers = this.typings.get(convoId)
+      if (!typingPeers) {
+        return
+      }
+
+      const typingPeer = typingPeers.find(({ peerId }) => typingPeerId === peerId)
+      if (!typingPeer) {
+        return
+      }
+
+      window.clearTimeout(typingPeer.cancelTypingTimeoutId)
+      typingPeers.splice(typingPeers.indexOf(typingPeer), 1)
+
+      // Пустой массив в мапе ничего не значит, но остаётся в ней навсегда
+      if (typingPeers.length === 0) {
+        this.typings.delete(convoId)
+      }
+    }
+  }
+})
+
+// defineStore оборачивает стейт в UnwrapRef, заставляя IDE показывать полный бред.
+// Добавляем стейт в исключение, считая, что его значение не является рефом
+declare module '@vue/reactivity' {
+  interface RefUnwrapBailTypes {
+    Convos: Convos
+  }
+}

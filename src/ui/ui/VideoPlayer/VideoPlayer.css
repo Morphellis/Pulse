@@ -1,0 +1,162 @@
+.VideoPlayer {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+}
+
+.VideoPlayer__video {
+  width: 100%;
+  height: 100%;
+  /* contain, а не cover: обрезать чужой кадр хуже, чем оставить поля */
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.VideoPlayer--controlsHidden {
+  cursor: none;
+}
+
+.VideoPlayer__buffering {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  pointer-events: none;
+}
+
+.VideoPlayer__controls {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: var(--vkd--space_24) var(--vkd--space_12) var(--vkd--space_8);
+  /* Подложка градиентом, а не заливкой: панель не отрезает нижнюю часть кадра */
+  background: linear-gradient(to top, rgb(0 0 0 / 0.75), transparent);
+  opacity: 1;
+  transition: opacity var(--vkd--duration_medium) var(--vkd--ease_out);
+}
+
+.VideoPlayer--controlsHidden .VideoPlayer__controls {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.VideoPlayer__track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* Полоса тонкая, а хват по высоте широкий: иначе в неё трудно попасть мышью */
+  height: 16px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.VideoPlayer__trackLine {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  border-radius: var(--vkd--radius_pill);
+  background: rgb(255 255 255 / 0.25);
+  overflow: hidden;
+}
+
+.VideoPlayer__trackBuffered,
+.VideoPlayer__trackProgress {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  border-radius: var(--vkd--radius_pill);
+}
+
+.VideoPlayer__trackBuffered {
+  background: rgb(255 255 255 / 0.35);
+}
+
+.VideoPlayer__trackProgress {
+  background: var(--vkui--color_background_accent);
+}
+
+.VideoPlayer__trackKnob {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translateY(-50%) scale(0);
+  transition: transform var(--vkd--duration_fast) var(--vkd--ease_out);
+  pointer-events: none;
+}
+
+.VideoPlayer__track:hover .VideoPlayer__trackKnob {
+  transform: translateY(-50%) scale(1);
+}
+
+.VideoPlayer__buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--vkd--space_4);
+}
+
+.VideoPlayer__button {
+  color: #fff;
+}
+
+.VideoPlayer__button:hover {
+  background: rgb(255 255 255 / 0.15);
+}
+
+.VideoPlayer__volume {
+  display: flex;
+  align-items: center;
+}
+
+/*
+  Ползунок громкости раскрывается по наведению: постоянно висящая полоса
+  забирает место у времени, а нужна редко
+*/
+.VideoPlayer__volumeRange {
+  width: 0;
+  height: 4px;
+  margin: 0;
+  opacity: 0;
+  appearance: none;
+  border-radius: var(--vkd--radius_pill);
+  background: rgb(255 255 255 / 0.3);
+  cursor: pointer;
+  transition:
+    width var(--vkd--duration_medium) var(--vkd--ease_out),
+    opacity var(--vkd--duration_medium) var(--vkd--ease_out),
+    margin var(--vkd--duration_medium) var(--vkd--ease_out);
+}
+
+.VideoPlayer__volume:hover .VideoPlayer__volumeRange,
+.VideoPlayer__volumeRange:focus-visible {
+  width: 72px;
+  margin: 0 var(--vkd--space_8);
+  opacity: 1;
+}
+
+.VideoPlayer__volumeRange::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.VideoPlayer__time {
+  margin-left: var(--vkd--space_4);
+  font: var(--vkd--font_small);
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+
+.VideoPlayer__fullscreen {
+  margin-left: auto;
+}

@@ -1,0 +1,233 @@
+.Detective {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--vkui--color_background_content);
+}
+
+.Detective__header {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 16px;
+  flex: none;
+  font-weight: 500;
+  border-bottom: 1px solid var(--vkui--color_separator_primary);
+}
+
+.Detective__tabs {
+  flex: none;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--vkui--color_separator_primary);
+}
+
+.Detective__content {
+  flex: 1;
+  overflow: overlay;
+  padding: 16px;
+}
+
+.DtForm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.DtForm .Input {
+  flex: 1;
+  min-width: 220px;
+}
+
+.DtSection {
+  margin-bottom: 20px;
+}
+
+.DtSection__title {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.DtSection__hint {
+  margin-left: 8px;
+  font: var(--smallFont);
+  font-weight: 400;
+  color: var(--vkui--color_text_secondary);
+}
+
+.DtRow {
+  display: flex;
+  gap: 12px;
+  padding: 3px 0;
+}
+
+.DtRow__label {
+  flex: none;
+  width: 190px;
+  color: var(--vkui--color_text_secondary);
+}
+
+.DtRow__value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.DtUser {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+}
+
+.DtUserList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0 16px;
+}
+
+.DtBadge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 6px;
+  font: var(--smallFont);
+  background: var(--vkui--color_background_secondary);
+  color: var(--vkui--color_text_secondary);
+}
+
+.DtBadge--negative {
+  background: var(--vkui--color_background_negative_tint);
+  color: var(--vkui--color_text_negative);
+}
+
+.DtBadge--positive {
+  background: var(--vkui--color_background_positive_tint);
+  color: var(--vkui--color_text_positive);
+}
+
+.DtMuted {
+  color: var(--vkui--color_text_secondary);
+}
+
+.DtError {
+  color: var(--vkui--color_text_negative);
+}
+
+.DtProgress {
+  height: 6px;
+  margin: 8px 0;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--vkui--color_background_secondary);
+}
+
+.DtProgress__bar {
+  height: 100%;
+  background: var(--vkui--color_background_accent);
+  transition: width var(--mediumTransition);
+}
+
+.DtStatusDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--vkui--color_icon_tertiary);
+}
+
+.DtStatusDot--online {
+  background: var(--vkui--color_accent_green);
+}
+
+.DtWatched {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--vkui--color_separator_secondary);
+}
+
+.DtWatched__timeline {
+  grid-column: 1 / -1;
+}
+
+.DtTimeline {
+  position: relative;
+  height: 14px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--vkui--color_background_secondary);
+}
+
+.DtTimeline__session {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--vkui--color_background_accent);
+}
+
+.DtTimeline__session--mobile {
+  background: var(--vkui--color_accent_orange);
+}
+
+.DtTimelineAxis {
+  display: flex;
+  justify-content: space-between;
+  font: var(--smallFont);
+  color: var(--vkui--color_text_tertiary);
+}
+
+.DtComment {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--vkui--color_separator_secondary);
+}
+
+.DtComment__meta {
+  display: flex;
+  gap: 8px;
+  font: var(--smallFont);
+  color: var(--vkui--color_text_secondary);
+}
+
+.DtComment__text {
+  margin-top: 4px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.DtNumberInput {
+  width: 90px;
+}
+
+.DtInline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.DtUser__name {
+  color: var(--vkui--color_text_link);
+  cursor: pointer;
+  text-align: left;
+}
+
+.DtUser__name:hover {
+  text-decoration: underline;
+}
+
+.DtUser__id {
+  font: var(--smallFont);
+  color: var(--vkui--color_text_tertiary);
+  user-select: text;
+}
+
+/* Пояснение об ограничении: приглушённая рамка, чтобы не путать с результатами */
+.DtNote {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--vkui--color_background_warning, var(--vkui--color_background_secondary));
+  color: var(--vkui--color_text_secondary);
+  font: var(--smallFont);
+}

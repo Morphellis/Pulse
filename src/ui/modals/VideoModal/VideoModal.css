@@ -1,0 +1,23 @@
+/* Ширина и высота приходят из пропорций самого видео и задаются в пикселях */
+.VideoModal {
+  max-width: 100%;
+}
+
+.VideoModal__player {
+  position: relative;
+  display: flex;
+  background: #000;
+}
+
+.VideoModal__state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--vkd--space_32) var(--vkd--space_20);
+  text-align: center;
+  font: var(--vkd--font_body);
+  color: var(--vkui--color_text_secondary);
+  background: #000;
+}

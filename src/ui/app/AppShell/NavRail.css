@@ -1,0 +1,132 @@
+.NavRail {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  align-items: center;
+  gap: var(--vkd--space_4);
+  width: var(--vkd--sidebar_width);
+  padding: var(--vkd--space_12) 0;
+  background: var(--vkui--color_background_secondary);
+  border-right: 1px solid var(--vkui--color_separator_primary);
+}
+
+.NavRail__spacer {
+  flex: 1;
+}
+
+/* Точка появляется, когда соединение с ВК потеряно или переустанавливается */
+.NavRail__connection {
+  width: 8px;
+  height: 8px;
+  margin-bottom: var(--vkd--space_8);
+  border-radius: 50%;
+  background: var(--vkui--color_icon_negative);
+  animation: nav-connection-pulse 1.6s var(--vkd--ease) infinite;
+}
+
+.NavRail__avatar {
+  display: flex;
+  padding: var(--vkd--space_4);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: box-shadow var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.NavRail__avatar:hover,
+.NavRail__avatar.Popper__trigger--active {
+  box-shadow: 0 0 0 2px var(--vkui--color_stroke_accent);
+}
+
+.NavRailItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 44px;
+  border-radius: var(--vkd--radius_md);
+  color: var(--vkui--color_icon_secondary);
+  cursor: pointer;
+  transition:
+    background-color var(--vkd--duration_fast) var(--vkd--ease),
+    color var(--vkd--duration_fast) var(--vkd--ease);
+}
+
+.NavRailItem:hover {
+  color: var(--vkui--color_icon_primary);
+  background-color: var(--vkui--color_transparent--hover);
+}
+
+.NavRailItem--active {
+  color: var(--vkui--color_icon_accent);
+  background-color: var(--vkui--color_transparent--active);
+}
+
+.NavRailItem__icon {
+  display: flex;
+  line-height: 0;
+}
+
+/*
+  Полоска у левого края - привычный по десктопным мессенджерам указатель текущего
+  раздела. Растёт из точки в полную высоту, поэтому переход читается как движение
+*/
+.NavRailItem__indicator {
+  position: absolute;
+  /* Выносим полоску к самому краю панели: ширина кнопки уже её ширины */
+  left: calc((var(--vkd--sidebar_width) - 48px) / -2);
+  width: 3px;
+  height: 8px;
+  border-radius: 0 var(--vkd--radius_pill) var(--vkd--radius_pill) 0;
+  background: var(--vkui--color_icon_accent);
+  opacity: 0;
+  transform: scaleY(0.2);
+  transition:
+    opacity var(--vkd--duration_medium) var(--vkd--ease_out),
+    height var(--vkd--duration_medium) var(--vkd--ease_out),
+    transform var(--vkd--duration_medium) var(--vkd--ease_out);
+}
+
+.NavRailItem--active .NavRailItem__indicator {
+  opacity: 1;
+  height: 24px;
+  transform: scaleY(1);
+}
+
+.NavRailItem__badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  box-shadow: 0 0 0 2px var(--vkui--color_background_secondary);
+}
+
+@keyframes nav-connection-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .NavRail__connection {
+    animation: none;
+  }
+}
+
+@media (width < 500px) {
+  .NavRail {
+    width: 56px;
+  }
+
+  .NavRailItem {
+    width: 44px;
+    height: 40px;
+  }
+
+  .NavRailItem__indicator {
+    left: -6px;
+  }
+}

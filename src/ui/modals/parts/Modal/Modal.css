@@ -1,0 +1,7 @@
+.Modal {
+  background-color: var(--vkui--color_background_modal);
+  border-radius: var(--vkd--radius_lg);
+  box-shadow: var(--vkd--shadow_lg), inset 0 0 0 1px var(--vkui--color_separator_primary);
+  min-width: 0;
+  overflow: hidden;
+}

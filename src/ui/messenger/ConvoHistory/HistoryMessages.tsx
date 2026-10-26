@@ -1,0 +1,111 @@
+import { computed, defineComponent } from 'vue'
+import { useServices } from 'services'
+import * as Convo from 'model/Convo'
+import * as Message from 'model/Message'
+import { NonEmptyArray } from 'misc/utils'
+import { isPreviousDay, isSameDay } from 'misc/dateTime'
+import { MessagesStack } from 'ui/messenger/MessagesStack/MessagesStack'
+
+type HistoryMessagesProps = {
+  convo: Convo.Convo
+  messages: Message.Message[]
+  hasMessagesAbove: boolean
+  openMessagePreview: (cmid: Message.Cmid) => void
+}
+
+type HistoryBlock =
+  | { kind: 'Date', date: number }
+  | { kind: 'Stack', stack: NonEmptyArray<Message.Message> }
+  | { kind: 'Unread', inReadBy: Message.Cmid }
+
+export const HistoryMessages = defineComponent<HistoryMessagesProps>((props) => {
+  const { lang } = useServices()
+
+  const blocks = computed(() => {
+    return props.messages.reduce((blocks, message, index) => {
+      const prevMessage = props.messages[index - 1]
+
+      // It's important to not render the Unread block when we're not sure if it's the unread start.
+      // Otherwise, we'll have a risk of scrolling to a wrong unread block via an anchor
+      if (
+        !message.isOut &&
+        props.convo.inReadBy &&
+        Message.isUnread(message, props.convo) &&
+        (prevMessage ? !Message.isUnread(prevMessage, props.convo) : !props.hasMessagesAbove)
+      ) {
+        blocks.push({ kind: 'Unread', inReadBy: props.convo.inReadBy })
+      }
+
+      const prevBlock = blocks.at(-1)
+
+      if (
+        !prevBlock ||
+        !prevMessage ||
+        !isSameDay(new Date(prevMessage.sentAt), new Date(message.sentAt))
+      ) {
+        blocks.push({ kind: 'Date', date: message.sentAt })
+        blocks.push({ kind: 'Stack', stack: [message] })
+        return blocks
+      }
+
+      if (
+        prevBlock.kind !== 'Stack' ||
+        prevMessage.kind !== message.kind ||
+        prevMessage.authorId !== message.authorId
+      ) {
+        blocks.push({ kind: 'Stack', stack: [message] })
+        return blocks
+      }
+
+      prevBlock.stack.push(message)
+      return blocks
+    }, new Array<HistoryBlock>())
+  })
+
+  return () => blocks.value.map((block) => {
+    switch (block.kind) {
+      case 'Stack':
+        // Не указываем key, чтобы vue сам определял, какие стеки нужно создать, а какие обновить.
+        // Нет способа выразить key так, чтобы он не менялся при изменении того же стека(
+        return (
+          <MessagesStack
+            messages={block.stack}
+            openMessagePreview={props.openMessagePreview}
+          />
+        )
+
+      case 'Date': {
+        const blockDate = new Date(block.date)
+        const nowDate = new Date()
+        let date: string
+
+        if (isSameDay(nowDate, blockDate)) {
+          date = lang.use('date_today')
+        } else if (isPreviousDay(nowDate, blockDate)) {
+          date = lang.use('date_yesterday')
+        } else {
+          const isSameYear = nowDate.getFullYear() === blockDate.getFullYear()
+          date = lang.dateTimeFormatter({
+            day: 'numeric',
+            month: 'long',
+            year: isSameYear ? undefined : 'numeric'
+          }).format(block.date)
+        }
+
+        return <div class="ConvoHistory__dateBlock" key={`date-${block.date}`}>{date}</div>
+      }
+
+      case 'Unread':
+        return (
+          <div
+            class="ConvoHistory__unreadBlock"
+            key={`unread-${block.inReadBy}`}
+          >
+            {lang.use('me_convo_unread_messages')}
+          </div>
+        )
+    }
+  })
+}, {
+  props: ['convo', 'messages', 'hasMessagesAbove', 'openMessagePreview']
+})
